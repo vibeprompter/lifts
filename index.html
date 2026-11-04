@@ -10,13 +10,14 @@
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<link id="fontlink" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#F2F4F8; --surface:#FFFFFF; --surface2:#E8ECF3; --ink:#1A1F2B; --muted:#687085; --line:#DDE2EA;
   --accent:#2F6BFF; --accent-ink:#FFFFFF; --accent-soft:#E5EDFF; --danger:#E5484D; --success:#16A271;
   --body:"Barlow",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   --cond:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  --r-lg:16px; --r:12px; --r-sm:8px;
   box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px);
   padding-bottom:env(safe-area-inset-bottom,0px);
@@ -46,36 +47,36 @@ h3{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--mut
 .sub{color:var(--muted);font-size:.9rem}
 .row{display:flex;gap:8px;align-items:center}
 .spread{display:flex;justify-content:space-between;align-items:center;gap:8px}
-.btn{border:0;border-radius:12px;padding:11px 16px;background:var(--surface2);font-weight:600;min-height:44px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:0;border-radius:var(--r);padding:11px 16px;background:var(--surface2);font-weight:600;min-height:44px}
 .btn.primary{background:var(--accent);color:var(--accent-ink)}
 .btn.danger{background:transparent;color:var(--danger);border:1px solid var(--danger)}
 .btn.ghost{background:transparent;border:1px solid var(--line)}
 .btn.wide{width:100%}
 .btn.sm{padding:6px 12px;min-height:36px;font-size:.9rem}
 .btn:disabled{opacity:.45}
-.icon{border:0;background:transparent;min-width:40px;min-height:40px;border-radius:8px;font-size:1.05rem;color:var(--muted)}
+.icon{border:0;background:transparent;min-width:40px;min-height:40px;border-radius:var(--r-sm);font-size:1.05rem;color:var(--muted)}
 .icon:active{background:var(--surface2)}
 .icon:disabled{opacity:.3}
 .stack>*+*{margin-top:12px}
-.panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:14px}
 .plan .names{color:var(--muted);font-size:.92rem;margin:4px 0 12px}
 .plan.tpl{background:transparent;border-style:dashed}
-.banner{background:var(--accent);color:var(--accent-ink);border-radius:16px;padding:14px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.banner{background:var(--accent);color:var(--accent-ink);border-radius:var(--r-lg);padding:14px;display:flex;justify-content:space-between;align-items:center;gap:8px}
 .banner .btn{background:var(--accent-ink);color:var(--accent)}
-.empty{border:2px dashed var(--line);border-radius:16px;padding:22px;text-align:center;color:var(--muted)}
+.empty{border:2px dashed var(--line);border-radius:var(--r-lg);padding:22px;text-align:center;color:var(--muted)}
 label.f,.f{display:block;font-size:.85rem;color:var(--muted)}
-input.t,textarea.t,select.t{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;min-height:44px}
+input.t,textarea.t,select.t{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-sm);padding:10px 12px;min-height:44px}
 textarea.t{min-height:70px;resize:vertical}
 .name-in{font-family:var(--cond);font-size:1.6rem;font-weight:600;border:0;border-bottom:2px solid var(--line);background:transparent;width:100%;padding:4px 0;border-radius:0}
 .name-in:focus{outline:none;border-bottom-color:var(--accent)}
-.item{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px}
+.item{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px}
 .item .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
-.item .grid input{width:100%;text-align:center;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 4px;min-height:42px}
+.item .grid input{width:100%;text-align:center;background:var(--bg);border:1px solid var(--line);border-radius:var(--r-sm);padding:8px 4px;min-height:42px}
 .exname{font-weight:600;line-height:1.25}
 .exname small{display:block;font-weight:400;color:var(--muted);font-size:.85rem}
 /* workout */
 .clock{font-family:var(--cond);font-weight:700;font-size:3.6rem;line-height:.9;font-variant-numeric:tabular-nums}
-.ex{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.ex{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden}
 .ex-h{padding:12px 8px 6px 14px;display:flex;justify-content:space-between;gap:6px}
 .ex .ex-h .exname{color:var(--accent);font-size:1.05rem}
 .target{color:var(--muted);font-size:.85rem;padding:0 14px 8px}
@@ -84,7 +85,7 @@ textarea.t{min-height:70px;resize:vertical}
 .sets td{text-align:center;padding:5px 3px}
 .sets td.n{font-weight:700;width:40px}
 .sets td.prev{color:var(--muted);font-size:.85rem;width:24%}
-.sets input{width:100%;max-width:84px;text-align:center;background:var(--surface2);border:1px solid transparent;border-radius:8px;padding:8px 2px;min-height:40px;font-size:1.05rem;font-weight:600}
+.sets input{width:100%;max-width:84px;text-align:center;background:var(--surface2);border:1px solid transparent;border-radius:var(--r-sm);padding:8px 2px;min-height:40px;font-size:1.05rem;font-weight:600}
 .sets input:focus{outline:none;border-color:var(--accent);background:var(--surface)}
 .sets input::placeholder{color:var(--muted);opacity:.7;font-weight:500}
 .chk{width:36px;height:36px;border-radius:50%;border:2px solid var(--line);background:transparent;font-size:1rem;color:transparent;font-weight:700}
@@ -95,16 +96,16 @@ tr.done .chk{background:var(--accent);border-color:var(--accent);color:var(--acc
 .rest{position:fixed;left:0;right:0;bottom:calc(64px + env(safe-area-inset-bottom,0px));z-index:20;background:var(--accent);color:var(--accent-ink);padding:10px 16px;display:flex;align-items:center;gap:10px;overflow:hidden}
 .rest .bar{position:absolute;left:0;top:0;bottom:0;background:rgba(255,255,255,.18);pointer-events:none}
 .rest .time{font-family:var(--cond);font-weight:700;font-size:2rem;font-variant-numeric:tabular-nums;position:relative;flex:1}
-.rest button{position:relative;background:rgba(255,255,255,.2);border:0;color:inherit;border-radius:8px;min-height:40px;padding:0 12px;font-weight:600}
+.rest button{position:relative;background:rgba(255,255,255,.2);border:0;color:inherit;border-radius:var(--r-sm);min-height:40px;padding:0 12px;font-weight:600}
 .badge{display:inline-block;background:var(--success);color:#fff;font-size:.68rem;font-weight:700;border-radius:6px;padding:1px 6px;margin-left:6px;vertical-align:middle;letter-spacing:.03em}
 /* history */
-.hist{display:block;width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.hist{display:block;width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
 .stats{display:flex;gap:16px;color:var(--muted);font-size:.88rem;margin-top:4px;flex-wrap:wrap}
 .month{font-family:var(--cond);font-weight:600;color:var(--muted);font-size:1.05rem;margin:18px 0 8px}
 .setline{font-variant-numeric:tabular-nums;color:var(--muted);font-size:.95rem}
 /* progress */
 .tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.tile{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px}
 .tile b{display:block;font-family:var(--cond);font-size:1.8rem;line-height:1.1;font-variant-numeric:tabular-nums}
 .tile span{color:var(--muted);font-size:.85rem}
 .chart{width:100%;height:auto;display:block}
@@ -140,11 +141,41 @@ nav.tabs .live::after{content:"";position:absolute;top:14px;right:calc(50% - 34p
 .pick[aria-pressed="true"] .mark{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 .grp{font-family:var(--cond);font-weight:600;color:var(--muted);margin:16px 0 2px;font-size:1.05rem}
 .modal{position:fixed;inset:0;z-index:60;background:rgba(10,14,20,.5);display:grid;place-items:center;padding:20px}
-.modal .box{background:var(--surface);border-radius:16px;padding:18px;max-width:420px;width:100%}
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:70;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:.95rem;max-width:90vw}
-.seg{display:flex;flex-wrap:wrap;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.modal .box{background:var(--surface);border-radius:var(--r-lg);padding:18px;max-width:420px;width:100%}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:70;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:var(--r-sm);font-size:.95rem;max-width:90vw}
+.seg{display:flex;flex-wrap:wrap;border:1px solid var(--line);border-radius:var(--r-sm);overflow:hidden}
 .seg button{flex:1 1 auto;border:0;background:transparent;padding:9px 8px;min-height:42px;font-weight:600;color:var(--muted);font-size:.9rem}
 .seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.themes{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.sw{border:2px solid var(--line);background:var(--surface);border-radius:var(--r);padding:8px;font-size:.8rem;font-weight:600;display:flex;flex-direction:column;gap:6px;align-items:stretch;text-align:center}
+.sw[aria-pressed="true"]{border-color:var(--accent)}
+.sw-p{display:block;height:42px;border-radius:var(--r-sm);border:1px solid rgba(128,128,128,.35);position:relative;overflow:hidden}
+.sw-p i{position:absolute;left:6px;right:6px;top:6px;height:14px;border-radius:4px}
+.sw-p b{position:absolute;right:8px;bottom:6px;width:16px;height:16px;border-radius:50%}
+.colrow{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.colrow input[type=color]{width:52px;height:36px;border:1px solid var(--line);border-radius:var(--r-sm);background:transparent;padding:2px}
+input[type=range]{width:100%;accent-color:var(--accent)}
+input[type=checkbox]{accent-color:var(--accent)}
+.preview{border:1px dashed var(--line);border-radius:var(--r);padding:10px 12px}
+.preview .big{font-family:var(--cond);font-weight:700;font-size:1.6rem;line-height:1.1}
+.diag{font-size:.88rem;color:var(--muted);display:grid;grid-template-columns:auto 1fr;gap:2px 12px}
+.diag b{color:var(--ink);font-weight:600}
+.ic{width:18px;height:18px;flex:none}
+.icon .ic{width:20px;height:20px}
+.icon.big .ic{width:28px;height:28px}
+.icon.big{min-width:48px;min-height:48px;color:var(--accent)}
+.clock.paused{opacity:.45}
+.seg-ic{flex-wrap:nowrap}
+.seg-ic button{flex:none;padding:6px 10px;min-height:38px;display:inline-flex;align-items:center}
+.plangrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.plan.mini{padding:12px;display:flex;flex-direction:column}
+.plan.mini h2{font-size:1.15rem;overflow-wrap:anywhere}
+.plan.mini .row{margin-top:auto}
+.selrow{display:flex;align-items:center;gap:10px;padding:6px 2px;border-bottom:1px solid var(--line)}
+.selrow .exname{flex:1;min-width:0}
+.mark.on{flex:none;width:26px;height:26px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-size:.8rem;font-weight:700}
+.choice{display:flex;flex-direction:column;gap:8px}
+.newtag{display:inline-block;font-size:.68rem;font-weight:700;border:1px solid var(--accent);color:var(--accent);border-radius:6px;padding:0 5px;margin-left:6px}
 .hr{height:1px;background:var(--line);margin:18px 0}
 @media (prefers-reduced-motion:no-preference){ .chk,.btn,tr td{transition:background-color .15s} }
 </style>
@@ -251,6 +282,14 @@ const LIB = [
  ["cleanpull","olympic","w","Clean Pull","Ciąg zarzutowy","Tah na přemístění","Ťah na premiestnenie","oly"],
  ["ohsq","olympic","w","Overhead Squat","Przysiad ze sztangą nad głową","Dřep s činkou nad hlavou","Drep s činkou nad hlavou","oly ohs"],
  ["snatchbal","olympic","w","Snatch Balance","Snatch balance (opad pod sztangę)","Snatch balance (podsed pod činku)","Snatch balance (podsed pod činku)","oly"],
+ ["snatchdl","olympic","w","Snatch Deadlift","Ciąg rwaniowy z podestu","Mrtvý tah trhovým úchopem","Mŕtvy ťah trhovým úchopom","oly"],
+ ["blocksnatch","olympic","w","Block Snatch","Rwanie z bloków","Trh z bloků","Trh z blokov","oly"],
+ ["floorpress","chest","w","Floor Press","Wyciskanie sztangi z podłogi","Tlak vleže na zemi","Tlak v ľahu na zemi",""],
+ ["zercher","legs","w","Zercher Squat","Przysiad Zerchera","Zercherův dřep","Zercherov drep",""],
+ ["deficitdl","back","w","Deficit Deadlift","Martwy ciąg z deficytem","Mrtvý tah z vyvýšení","Mŕtvy ťah z vyvýšenia",""],
+ ["blockpull","back","w","Block Pull","Ciągi z bloków","Tah z bloků","Ťah z blokov","rack pull"],
+ ["bbrowuh","back","w","Barbell Row (Underhand)","Wiosłowanie sztangą podchwytem","Přítahy velké činky podhmatem","Príťahy veľkej činky podhmatom",""],
+ ["hkr","core","bw","Hanging Knee Raise","Wznosy kolan w zwisie na drążku","Přitahování kolen ve visu","Prednožovanie kolien vo vise",""],
  ["plank","core","t","Plank","Deska","Prkno (plank)","Doska (plank)",""],
  ["sideplank","core","t","Side Plank","Deska bokiem","Boční prkno","Bočná doska",""],
  ["crunch","core","bw","Crunch","Brzuszki","Zkracovačky","Skracovačky","spięcia brusaky"],
@@ -307,7 +346,8 @@ const CATS = {
   arms:["Arms","Ramiona","Paže","Ruky"], legs:["Legs","Nogi","Nohy","Nohy"], core:["Core","Brzuch","Střed těla","Stred tela"],
   olympic:["Olympic lifts","Bój olimpijski","Vzpírání","Vzpieranie"], cardio:["Cardio and other","Cardio i inne","Kardio a další","Kardio a ďalšie"],
   warmup:["Warm-up","Rozgrzewka","Rozcvička","Rozcvička"], stretch:["Stretching","Rozciąganie","Protahování","Strečing"],
-  static:["Static holds","Ćwiczenia statyczne","Statické výdrže","Statické výdrže"]
+  static:["Static holds","Ćwiczenia statyczne","Statické výdrže","Statické výdrže"],
+  other:["Other","Inne","Ostatní","Ostatné"]
 };
 const LANGS = {en:["English","en-GB",0], pl:["Polski","pl-PL",1], cs:["Čeština","cs-CZ",2], sk:["Slovenčina","sk-SK",3]};
 const TYPES = {w:"Weight and reps", bw:"Reps (bodyweight)", t:"Time"};
@@ -328,12 +368,83 @@ const TEMPLATES = [
   items:[["jumpingjack",1,"1:00",15],["armcircles",1,"10",15],["legswings",1,"10",15],["catcow",1,"10",15],["worldsgreatest",2,"5",15],["hipflex",2,"0:45",15],["hamstr",2,"0:45",15],["deadhang",2,"0:30",30]]}
 ];
 
+/* ---------- icons ---------- */
+const ICONS = {
+  export:'<path d="M12 15V4"/><path d="M8 8l4-4 4 4"/><path d="M5 14v5h14v-5"/>',
+  import:'<path d="M12 4v11"/><path d="M8 11l4 4 4-4"/><path d="M5 14v5h14v-5"/>',
+  pause:'<rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/>',
+  play:'<path d="M7 5l12 7-12 7z"/>',
+  grid:'<rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/>',
+  list:'<path d="M4 6h16M4 12h16M4 18h16"/>',
+  shuffle:'<path d="M16 3h5v5"/><path d="M4 20L21 3"/><path d="M21 16v5h-5"/><path d="M15 15l6 6"/><path d="M4 4l5 5"/>',
+  reorder:'<path d="M8 20V4M4 8l4-4 4 4"/><path d="M16 4v16M12 16l4 4 4-4"/>',
+  check:'<path d="M5 12l5 5L20 7"/>'
+};
+const ico = n => `<svg class="ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICONS[n]}</svg>`;
+
+/* ---------- appearance ---------- */
+const APP_VERSION = "4";
+const T = (bg,surface,surface2,ink,muted,line,accent,accentInk,accentSoft,danger,success) => ({bg,surface,surface2,ink,muted,line,accent,"accent-ink":accentInk,"accent-soft":accentSoft,danger,success});
+const THEMES = {
+  light:   {name:"Blue light", dark:false, v:T("#F2F4F8","#FFFFFF","#E8ECF3","#1A1F2B","#687085","#DDE2EA","#2F6BFF","#FFFFFF","#E5EDFF","#E5484D","#16A271")},
+  dark:    {name:"Blue dark",  dark:true,  v:T("#0F1218","#181C24","#232A36","#E9ECF2","#9AA3B5","#2A3140","#5B8CFF","#0B1020","#1D2A4C","#FF6B6E","#36CC93")},
+  amoled:  {name:"Pure black", dark:true,  v:T("#000000","#0D0D0F","#1A1B1F","#F2F3F5","#8E95A3","#23252B","#4C8DFF","#000000","#11203F","#FF6B6E","#36CC93")},
+  ocean:   {name:"Ocean",      dark:true,  v:T("#0B1417","#122026","#1A2D34","#E3F1F4","#8FA9B0","#213840","#22B8CF","#03181C","#0F3640","#FF6B6E","#5BD69B")},
+  forest:  {name:"Forest",     dark:true,  v:T("#0E1512","#16201B","#213027","#E6EFEA","#93A89C","#26362D","#3FBF7F","#04140C","#173527","#FF6B6E","#8FD45A")},
+  graphite:{name:"Graphite",   dark:true,  v:T("#151515","#1F1F1F","#2B2B2B","#EDEDED","#A0A0A0","#333333","#E6E6E6","#111111","#363636","#FF6B6E","#5BD69B")},
+  lavender:{name:"Lavender",   dark:false, v:T("#F5F3FB","#FFFFFF","#ECE8F7","#211C33","#6F6886","#E0DBEE","#7357E8","#FFFFFF","#ECE6FF","#D93F45","#16A271")},
+  sunset:  {name:"Sunset",     dark:false, v:T("#FBF6F2","#FFFFFF","#F2E8E0","#2A1E18","#85706A","#EADBD0","#E8632B","#FFFFFF","#FDE6DA","#C9302C","#2E9E6A")}
+};
+const FONTS = {
+  barlow:["Barlow","Barlow:wght@400;500;600;700"], inter:["Inter","Inter:wght@400;500;600;700"], roboto:["Roboto","Roboto:wght@400;500;700"],
+  lexend:["Lexend","Lexend:wght@400;500;600;700"], atkinson:["Atkinson Hyperlegible","Atkinson+Hyperlegible:wght@400;700"],
+  nunito:["Nunito","Nunito:wght@400;600;700"], system:["Phone's own font",null]
+};
+const HFONTS = {
+  barlowc:["Barlow Condensed","Barlow+Condensed:wght@500;600;700"], oswald:["Oswald","Oswald:wght@500;600;700"],
+  robotoc:["Roboto Condensed","Roboto+Condensed:wght@500;600;700"], saira:["Saira Condensed","Saira+Condensed:wght@500;600;700"],
+  archivo:["Archivo Narrow","Archivo+Narrow:wght@500;600;700"], body:["Same as text font",null], system:["Phone's own font",null]
+};
+const CUSTOM_KEYS = [["accent","Accent (buttons, ticks)"],["bg","Background"],["surface","Cards and bottom bar"],["ink","Text"],["accent-soft","Done set rows"],["danger","Delete and warnings"]];
+const apDefaults = () => ({theme:"auto", font:"barlow", head:"barlowc", scale:100, radius:12, dev:false, custom:{}});
+const darkMQ = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : {matches:false, addEventListener(){}};
+const themeKey = () => { const k = S.settings.ap.theme; return k==="auto" ? (darkMQ.matches ? "dark" : "light") : (THEMES[k] ? k : "light"); };
+function themeVars(){
+  const ap = S.settings.ap, v = Object.assign({}, THEMES[themeKey()].v, ap.custom||{});
+  if(ap.custom && ap.custom.accent){
+    const h = ap.custom.accent.replace("#",""), [r,g,b] = [0,2,4].map(i=>parseInt(h.slice(i,i+2),16)/255);
+    v["accent-ink"] = (0.2126*r + 0.7152*g + 0.0722*b) > 0.55 ? "#111111" : "#FFFFFF";
+  }
+  return v;
+}
+function applyAppearance(){
+  const ap = S.settings.ap, root = document.documentElement, v = themeVars();
+  Object.entries(v).forEach(([k,val]) => root.style.setProperty("--"+k, val));
+  root.style.colorScheme = THEMES[themeKey()].dark ? "dark" : "light";
+  const sys = 'system-ui,-apple-system,"Segoe UI",Roboto,sans-serif';
+  const bf = FONTS[ap.font] || FONTS.barlow, hf = HFONTS[ap.head] || HFONTS.barlowc;
+  const fams = [bf[1], ap.head==="body" ? null : hf[1]].filter(Boolean);
+  const href = fams.length ? "https://fonts.googleapis.com/css2?" + fams.map(f=>"family="+f).join("&") + "&display=swap" : "";
+  const link = document.getElementById("fontlink");
+  if(href && link.getAttribute("href")!==href) link.setAttribute("href", href);
+  if(!href) link.removeAttribute("href");
+  const bodyStack = bf[1] ? `"${bf[0]}",${sys}` : sys;
+  root.style.setProperty("--body", bodyStack);
+  root.style.setProperty("--cond", ap.head==="body" ? bodyStack : hf[1] ? `"${hf[0]}","Arial Narrow",${sys}` : sys);
+  root.style.fontSize = (ap.scale||100) + "%";
+  const r = ap.radius ?? 12;
+  root.style.setProperty("--r", r+"px"); root.style.setProperty("--r-lg", (r+4)+"px"); root.style.setProperty("--r-sm", Math.max(0, r-4)+"px");
+  let m = document.querySelector('meta[name="theme-color"]'); if(m) m.setAttribute("content", v.bg);
+}
+darkMQ.addEventListener && darkMQ.addEventListener("change", () => { if(S.settings.ap.theme==="auto"){ applyAppearance(); if(view==="settings") render(); } });
+
 /* ---------- storage ---------- */
 const KEY = "lifts.v1";
-const defaults = () => ({v:2, plans:[], custom:[], history:[], active:null, settings:{lang:"en", alt:"pl", rest:90, sound:true, wake:true, templates:true}});
+const defaults = () => ({v:2, plans:[], custom:[], history:[], active:null, settings:{lang:"en", alt:"pl", rest:90, sound:true, wake:true, templates:true, planView:"list", ap:apDefaults()}, draft:null});
 function hydrate(d){
   const base = defaults(), s = Object.assign(base.settings, d.settings||{});
   if(!d.settings || d.settings.alt===undefined) s.alt = s.lang==="en" ? "pl" : "en";
+  s.ap = Object.assign(apDefaults(), (d.settings && d.settings.ap) || {}); s.ap.custom = Object.assign({}, s.ap.custom||{});
   const out = Object.assign(base, d, {settings:s});
   out.history.sort((a,b)=>a.start-b.start);
   return out;
@@ -347,6 +458,33 @@ function save(){
   try{ localStorage.setItem(KEY, JSON.stringify(S)); }
   catch(e){ toast("Could not save on this device. Export a backup in Settings."); }
 }
+
+/* ---------- plan drafts (unsaved edits) ---------- */
+const clone = o => JSON.parse(JSON.stringify(o));
+function isDirty(){
+  const D = S.draft; if(!D) return false;
+  if(D.isNew) return !!(D.data.name.trim() || D.data.note.trim() || D.data.items.length);
+  const p = S.plans.find(x=>x.id===D.id); if(!p) return true;
+  return JSON.stringify(p) !== JSON.stringify(D.data);
+}
+const draftName = () => S.draft ? (S.draft.data.name.trim() || "Untitled plan") : "";
+function commitDraft(){
+  const D = S.draft; if(!D) return;
+  const p = clone(D.data); if(!p.name.trim()) p.name = "Untitled plan";
+  const i = S.plans.findIndex(x=>x.id===p.id);
+  if(i<0) S.plans.push(p); else S.plans[i] = p;
+  S.draft = null; save();
+}
+function openDraft(p, isNew){ S.draft = {id:p.id, isNew:!!isNew, data:clone(p)}; save(); sub = {k:"plan", id:p.id}; }
+async function leaveDraft(){ // true = ok to leave
+  if(!S.draft) return true;
+  if(!isDirty()){ S.draft = null; save(); return true; }
+  const r = await askChoice(`Save the changes to "${draftName()}"?`, [{v:"save",label:"Save",kind:"primary"},{v:"discard",label:"Discard changes",kind:"danger"},{v:"",label:"Keep editing",kind:"ghost"}]);
+  if(r==="save"){ commitDraft(); toast("Plan saved"); return true; }
+  if(r==="discard"){ S.draft = null; save(); return true; }
+  return false;
+}
+const elapsedMs = A => (A.pausedAt || Date.now()) - A.start - (A.pausedMs || 0);
 
 /* ---------- helpers ---------- */
 const $ = s => document.querySelector(s);
@@ -461,6 +599,15 @@ function toast(msg){
   el.textContent = msg; el.hidden = false;
   toastT = setTimeout(()=> el.hidden = true, msg.length > 60 ? 4500 : 2600);
 }
+function askChoice(msg, opts){
+  return new Promise(res => {
+    const d = document.createElement("div");
+    d.className = "modal";
+    d.innerHTML = `<div class="box" role="dialog" aria-modal="true"><p style="margin:0 0 16px">${esc(msg)}</p><div class="choice">${opts.map(o=>`<button class="btn ${o.kind||"ghost"}" data-r="${esc(o.v)}">${esc(o.label)}</button>`).join("")}</div></div>`;
+    d.addEventListener("click", ev => { const b = ev.target.closest("[data-r]"); if(b || ev.target===d){ ev.stopPropagation(); d.remove(); res(b ? b.dataset.r || null : null); } });
+    $("#layer").appendChild(d);
+  });
+}
 function ask(msg, ok="OK", danger=false){
   return new Promise(res => {
     const d = document.createElement("div");
@@ -507,37 +654,37 @@ let sub = null;      // {k:"plan",id} | {k:"hist",id,edit} | {k:"ex",id,m}
 let picker = null;
 
 /* ---------- PLANS ---------- */
-function planCard(p, tpl){
+function planCard(p, tpl, mini){
   const names = p.items.map(i => exMain(getEx(tpl ? i[0] : i.exId)));
   const last = [...S.history].reverse().find(w => w.planId===p.id);
+  const btns = tpl
+    ? `<button class="btn primary sm" ${mini?'style="flex:1"':""} data-act="startTpl" data-id="${p.id}">Start</button><button class="btn sm" data-act="copyTpl" data-id="${p.id}">${mini?"Copy":"Copy to my plans"}</button>`
+    : `<button class="btn primary sm" ${mini?'style="flex:1"':""} data-act="startPlan" data-id="${p.id}" ${p.items.length?"":"disabled"}>Start</button><button class="btn sm" data-act="editPlan" data-id="${p.id}">Edit</button>`;
+  if(mini) return `<div class="panel plan mini ${tpl?"tpl":""}"><h2>${esc(p.name||"Untitled plan")}</h2><div class="sub" style="margin:4px 0 10px">${names.length} exercise${names.length===1?"":"s"}${last?`, ${esc(fmtShort(last.start))}`:""}</div><div class="row" style="gap:6px">${btns}</div></div>`;
   return `<div class="panel plan ${tpl?"tpl":""}"><div class="spread"><h2>${esc(p.name||"Untitled plan")}</h2>${last?`<span class="sub">${esc(fmtDate(last.start))}</span>`:""}</div>
     <div class="names">${names.length ? esc(names.slice(0,5).join(", ")) + (names.length>5 ? ` and ${names.length-5} more` : "") : "No exercises yet"}</div>
-    <div class="row">${tpl
-      ? `<button class="btn primary sm" data-act="startTpl" data-id="${p.id}">Start</button><button class="btn sm" data-act="copyTpl" data-id="${p.id}">Copy to my plans</button>`
-      : `<button class="btn primary sm" data-act="startPlan" data-id="${p.id}" ${p.items.length?"":"disabled"}>Start</button><button class="btn sm" data-act="editPlan" data-id="${p.id}">Edit</button>`}</div></div>`;
+    <div class="row">${btns}</div></div>`;
 }
 function vPlans(){
   if(sub && sub.k==="plan") return vPlanEdit();
-  let h = `<h1>Plans</h1><div class="stack">`;
+  const grid = S.settings.planView==="grid", wrapCls = grid ? "plangrid" : "stack";
+  let h = `<div class="spread"><h1>Plans</h1><div class="seg seg-ic" role="group" aria-label="Plan layout"><button data-act="planView" data-v="list" aria-pressed="${!grid}" aria-label="List view">${ico("list")}</button><button data-act="planView" data-v="grid" aria-pressed="${grid}" aria-label="Compact grid view">${ico("grid")}</button></div></div><div class="stack">`;
   if(S.active) h += `<div class="banner"><div><strong>${esc(S.active.name)}</strong><div style="opacity:.85;font-size:.9rem">Workout in progress</div></div><button class="btn sm" data-act="tab" data-v="workout">Resume</button></div>`;
+  if(S.draft && isDirty()) h += `<div class="panel spread" style="border-color:var(--accent)"><div><strong>Unsaved changes</strong><div class="sub">${esc(draftName())}</div></div><div class="row"><button class="btn ghost sm" data-act="draftDiscard">Discard</button><button class="btn primary sm" data-act="draftOpen">Continue</button></div></div>`;
   h += `<div class="row"><button class="btn primary" style="flex:1" data-act="newPlan">New plan</button><button class="btn ghost" style="flex:1" data-act="startEmpty">Empty workout</button></div></div>`;
-  h += `<h3>My plans</h3><div class="stack">`;
-  if(!S.plans.length) h += `<div class="empty">No plans yet. Tap <strong>New plan</strong>, or copy a template below and change it.</div>`;
-  S.plans.forEach(p => h += planCard(p, false));
-  h += `</div>`;
-  if(S.settings.templates){
-    h += `<h3>Templates</h3><div class="stack">`;
-    TEMPLATES.forEach(t => h += planCard(t, true));
-    h += `</div>`;
-  }
+  h += `<div class="spread" style="margin:22px 0 8px"><h3 style="margin:0">My plans</h3><div class="row" style="gap:6px"><button class="btn ghost sm" data-act="impPlans">${ico("import")}Import</button><button class="btn ghost sm" data-act="expPlans" ${S.plans.length?"":"disabled"}>${ico("export")}Export</button></div></div>`;
+  if(!S.plans.length) h += `<div class="empty">No plans yet. Tap <strong>New plan</strong>, import a CSV file, or copy a template below.</div>`;
+  else h += `<div class="${wrapCls}">${S.plans.map(p => planCard(p, false, grid)).join("")}</div>`;
+  if(S.settings.templates) h += `<h3>Templates</h3><div class="${wrapCls}">${TEMPLATES.map(t => planCard(t, true, grid)).join("")}</div>`;
   return h;
 }
-function tplToItems(t){ return t.items.map(([exId, sets, reps, rest]) => ({exId, sets, reps, kg:"", rest: rest!=null ? String(rest) : ""})); }
+function tplToItems(t){ return t.items.map(([exId, sets, reps, rest]) => ({exId, sets, reps, kg:"", rest: rest!=null ? String(rest) : "", note:""})); }
 
 function vPlanEdit(){
-  const p = S.plans.find(x => x.id===sub.id);
+  const p = S.draft && S.draft.id===sub.id ? S.draft.data : null;
   if(!p){ sub=null; return vPlans(); }
-  let h = `<div class="row" style="margin-bottom:8px"><button class="btn ghost sm" data-act="back">Back to plans</button></div>
+  const bar = `<div class="row"><button class="btn ghost sm" data-act="planDiscard">Discard</button><button class="btn primary sm" data-act="planSave">${ico("check")}Save</button></div>`;
+  let h = `<div class="spread" style="margin-bottom:8px"><button class="btn ghost sm" data-act="back">Back</button>${bar}</div>
     <div class="stack">
     <div><label class="f" for="pname">Plan name</label><input id="pname" class="name-in" data-bind="planName" value="${esc(p.name)}" placeholder="e.g. Push day"></div>
     <div><label class="f" for="pnote">Note (optional)</label><textarea id="pnote" class="t" data-bind="planNote" placeholder="Anything you want to see before you start">${esc(p.note||"")}</textarea></div>`;
@@ -551,11 +698,14 @@ function vPlanEdit(){
         <label class="f">${t?"Time":"Reps"}<input data-sel data-bind="item" data-i="${i}" data-f="reps" value="${esc(it.reps)}" placeholder="${t?"1:00":"8–12"}"></label>
         <label class="f">${t?"—":(e.type==="bw"?"+kg":"kg")}<input inputmode="decimal" data-sel data-bind="item" data-i="${i}" data-f="kg" value="${esc(it.kg)}" ${t?"disabled":""}></label>
         <label class="f">Rest (s)<input inputmode="numeric" data-sel data-bind="item" data-i="${i}" data-f="rest" value="${esc(it.rest)}" placeholder="${S.settings.rest}"></label>
-      </div></div>`;
+      </div>
+      <input class="t" data-bind="item" data-i="${i}" data-f="note" value="${esc(it.note||"")}" placeholder="Note (optional), e.g. RPE 8 or an alternative" style="margin-top:8px;min-height:40px;font-size:.9rem"></div>`;
   });
   h += `<button class="btn primary wide" data-act="pick" data-v="plan">Add exercises</button>
+    <div class="row"><button class="btn ghost" style="flex:1" data-act="planDiscard">Discard</button><button class="btn primary" style="flex:1" data-act="planSave">${ico("check")}Save</button></div>
     <div class="hr"></div>
-    <div class="row"><button class="btn ghost" style="flex:1" data-act="dupPlan">Duplicate plan</button><button class="btn danger" style="flex:1" data-act="delPlan">Delete plan</button></div></div>`;
+    <div class="row"><button class="btn ghost sm" style="flex:1" data-act="expPlan">${ico("export")}Export this plan</button><button class="btn ghost sm" style="flex:1" data-act="dupPlan">Duplicate</button></div>
+    ${S.draft.isNew ? "" : `<button class="btn danger wide" data-act="delPlan">Delete plan</button>`}</div>`;
   return h;
 }
 
@@ -567,7 +717,9 @@ function vWorkout(){
     S.plans.filter(p=>p.items.length).forEach(p => h += `<button class="btn ghost wide" data-act="startPlan" data-id="${p.id}">Start ${esc(p.name||"Untitled plan")}</button>`);
     return h + `</div>`;
   }
-  let h = `<div class="spread" style="align-items:flex-end;margin:4px 0 6px"><div class="clock" id="elapsed">${fmtTime((Date.now()-A.start)/1000)}</div><button class="btn primary" data-act="finish">Finish</button></div>
+  const paused = !!A.pausedAt;
+  let h = `<div class="spread" style="align-items:flex-end;margin:4px 0 6px"><div class="row" style="align-items:center;gap:4px"><div class="clock ${paused?"paused":""}" id="elapsed">${fmtTime(Math.max(0,elapsedMs(A)/1000))}</div><button class="icon big" data-act="${paused?"timerResume":"timerPause"}" aria-label="${paused?"Resume timer":"Pause timer"}">${ico(paused?"play":"pause")}</button></div><button class="btn primary" data-act="finish">Finish</button></div>
+    ${paused ? `<div class="sub" style="margin-bottom:6px">Timer paused. Tap play to continue.</div>` : ""}
     <input class="name-in" data-bind="wName" value="${esc(A.name)}" aria-label="Workout name">
     <label class="f" style="margin:10px 0 14px">Started at<input type="datetime-local" class="t" data-bind="wStart" value="${toLocalInput(A.start)}" style="margin-top:4px"></label>
     ${A.note ? `<p class="sub" style="margin:0 0 12px">${esc(A.note)}</p>` : ""}<div class="stack">`;
@@ -575,8 +727,8 @@ function vWorkout(){
     const e = getEx(x.exId), prev = lastSets(x.exId) || [], t = e.type==="t", tg = x.target;
     let tline = "";
     if(tg){ const bits = []; if(tg.sets) bits.push(`${tg.sets} × ${tg.reps||"?"}`); if(tg.kg!=="" && tg.kg!=null && !t) bits.push(`${tg.kg} kg`); bits.push(`rest ${x.rest||S.settings.rest} s`); tline = `Target: ${bits.join(", ")}`; }
-    h += `<section class="ex"><div class="ex-h">${exLabel(e)}<div class="row" style="gap:0;align-items:flex-start"><button class="icon" aria-label="Move up" data-act="wxUp" data-x="${xi}" ${xi?"":"disabled"}>↑</button><button class="icon" aria-label="Remove exercise" data-act="wxDel" data-x="${xi}">✕</button></div></div>
-      ${tline ? `<div class="target">${esc(tline)}</div>` : ""}
+    h += `<section class="ex"><div class="ex-h">${exLabel(e)}<div class="row" style="gap:0;align-items:flex-start"><button class="icon" aria-label="Move up" data-act="wxUp" data-x="${xi}" ${xi?"":"disabled"}>↑</button><button class="icon" aria-label="Move down" data-act="wxDown" data-x="${xi}" ${xi<A.exercises.length-1?"":"disabled"}>↓</button><button class="icon" aria-label="Remove exercise" data-act="wxDel" data-x="${xi}">✕</button></div></div>
+      ${tline ? `<div class="target">${esc(tline)}</div>` : ""}${x.note ? `<div class="target">${esc(x.note)}</div>` : ""}
       <table class="sets"><thead><tr><th>Set</th><th>Previous</th>${t ? `<th colspan="2">Time</th>` : `<th>${e.type==="bw"?"+kg":"kg"}</th><th>Reps</th>`}<th>✓</th></tr></thead><tbody>`;
     x.sets.forEach((s, si) => {
       const p = prev[si];
@@ -592,7 +744,7 @@ function vWorkout(){
     h += `</tbody></table><div class="ex-f"><button class="btn sm" style="flex:1" data-act="addSet" data-x="${xi}">+ Add set</button><button class="btn ghost sm" data-act="delSet" data-x="${xi}" ${x.sets.length>1?"":"disabled"}>Remove last</button></div></section>`;
   });
   if(!A.exercises.length) h += `<div class="empty">Add the exercises you want to do now.</div>`;
-  h += `<button class="btn primary wide" data-act="pick" data-v="workout">Add exercises</button>
+  h += `<div class="row"><button class="btn primary" style="flex:1" data-act="pick" data-v="workout">Add exercises</button><button class="btn ghost" data-act="reorderOpen" ${A.exercises.length>1?"":"disabled"}>${ico("reorder")}Reorder</button></div>
     <button class="btn danger wide" data-act="discard">Discard workout</button></div>`;
   return h;
 }
@@ -752,16 +904,48 @@ function vSettings(){
       <label class="spread"><span>Keep screen on during a workout</span><input type="checkbox" data-bind="wake" ${st.wake?"checked":""} style="width:22px;height:22px"></label>
       <label class="spread"><span>Show templates on the Plans screen</span><input type="checkbox" data-bind="templates" ${st.templates?"checked":""} style="width:22px;height:22px"></label>
     </div>
+    ${vAppearance()}
     <div class="panel stack"><h2>Backup</h2><p class="sub" style="margin:0">Your data lives only in this browser. Clearing Chrome's site data removes it, so export a backup now and then.</p>
-      <div class="row"><button class="btn primary" style="flex:1" data-act="export">Export backup</button><button class="btn ghost" style="flex:1" data-act="import">Import backup</button></div>
+      <div class="row"><button class="btn primary" style="flex:1" data-act="export">${ico("export")}Export backup</button><button class="btn ghost" style="flex:1" data-act="import">${ico("import")}Import backup</button></div>
       <input type="file" id="importFile" accept=".json,application/json,text/plain" hidden>
-      <div id="backupBox"></div></div>`;
+      <div id="backupBox"></div></div>
+    <div class="panel stack"><h2>Plans as a spreadsheet (CSV)</h2><p class="sub" style="margin:0">Share plans or edit them in Excel or Google Sheets. Import adds plans and never replaces your existing ones.</p>
+      <div class="row"><button class="btn primary" style="flex:1" data-act="expPlans" ${S.plans.length?"":"disabled"}>${ico("export")}Export plans</button><button class="btn ghost" style="flex:1" data-act="impPlans">${ico("import")}Import plans</button></div></div>`;
   if(S.custom.length){
     h += `<div class="panel stack"><h2>Your own exercises</h2>`;
     S.custom.forEach(c => h += `<div class="spread">${exLabel(c)}<button class="icon" aria-label="Delete ${esc(c.en)}" data-act="delCustom" data-id="${c.id}">✕</button></div>`);
     h += `</div>`;
   }
   h += `<button class="btn danger wide" data-act="wipe">Erase all data</button></div>`;
+  return h;
+}
+
+function vAppearance(){
+  const ap = S.settings.ap;
+  const sw = (k, name, a, b) => `<button class="sw" data-act="theme" data-v="${k}" aria-pressed="${ap.theme===k}"><span class="sw-p" style="background:${a.bg}${b?`;background:linear-gradient(135deg,${a.bg} 50%,${b.bg} 50%)`:""}"><i style="background:${a.surface}"></i><b style="background:${a.accent}"></b></span>${esc(name)}</button>`;
+  let h = `<div class="panel stack"><h2>Appearance</h2>
+    <div><div class="f" style="margin-bottom:6px">Theme</div><div class="themes">${sw("auto","Auto (phone)",THEMES.light.v,THEMES.dark.v)}${Object.entries(THEMES).map(([k,t])=>sw(k,t.name,t.v)).join("")}</div></div>
+    <label class="f">Text font<select class="t" data-bind="apFont" style="margin-top:4px">${Object.entries(FONTS).map(([k,f])=>`<option value="${k}" ${ap.font===k?"selected":""}>${esc(f[0])}</option>`).join("")}</select></label>
+    <label class="f">Headings and numbers<select class="t" data-bind="apHead" style="margin-top:4px">${Object.entries(HFONTS).map(([k,f])=>`<option value="${k}" ${ap.head===k?"selected":""}>${esc(f[0])}</option>`).join("")}</select></label>
+    <div class="preview"><div class="big">12:45 · 100 kg × 5</div><div>Bench Press, Wyciskanie sztangi leżąc, Mŕtvy ťah</div></div>
+    <label class="f">Text size: <span id="scaleVal">${ap.scale}%</span><input type="range" min="85" max="130" step="5" value="${ap.scale}" data-bind="apScale"></label>
+    <p class="sub" style="margin:0">Lexend and Atkinson Hyperlegible are designed for easy reading. A new font downloads once while online, then works offline.</p>
+    <label class="spread"><span>Developer mode</span><input type="checkbox" data-bind="apDev" ${ap.dev?"checked":""} style="width:22px;height:22px"></label></div>`;
+  if(!ap.dev) return h;
+  const v = themeVars();
+  h += `<div class="panel stack"><h2>Developer mode</h2><p class="sub" style="margin:0">Colours here sit on top of the theme you picked. Reset brings back the theme's own colours.</p>
+    ${CUSTOM_KEYS.map(([k,l])=>`<label class="colrow"><span>${esc(l)}${ap.custom[k]?` <span class="badge" style="background:var(--accent);color:var(--accent-ink)">custom</span>`:""}</span><input type="color" data-bind="apColor" data-k="${k}" value="${esc(v[k])}"></label>`).join("")}
+    <button class="btn ghost" data-act="resetColors" ${Object.keys(ap.custom).length?"":"disabled"}>Reset colours to theme</button>
+    <label class="f">Corner roundness: <span id="radVal">${ap.radius}px</span><input type="range" min="0" max="24" step="2" value="${ap.radius}" data-bind="apRadius"></label>
+    <h3 style="margin:8px 0 0">Diagnostics</h3>
+    <div class="diag"><span>App version</span><b>${APP_VERSION}</b>
+      <span>Saved data</span><b>${fmtNum(((localStorage.getItem(KEY)||"").length)/1024,1)} KB</b>
+      <span>Plans / workouts</span><b>${S.plans.length} / ${S.history.length}</b>
+      <span>Own exercises</span><b>${S.custom.length}</b>
+      <span>Offline mode</span><b>${navigator.serviceWorker && navigator.serviceWorker.controller ? "active" : "not active"}</b>
+      <span>Theme in use</span><b>${esc(THEMES[themeKey()].name)}</b></div>
+    <div class="row"><button class="btn sm" style="flex:1" data-act="checkUpdate">Check for update</button><button class="btn ghost sm" style="flex:1" data-act="clearCache">Clear offline copy</button></div>
+    <button class="btn danger" data-act="resetLook">Reset all appearance settings</button></div>`;
   return h;
 }
 
@@ -783,9 +967,15 @@ function renderPicker(keepInput){
     .map(([c,n]) => `<button class="chip" data-act="pickCat" data-v="${c}" aria-pressed="${picker.cat===c}">${esc(n)}</button>`).join("");
   const toks = norm(picker.q).split(/\s+/).filter(Boolean);
   const list = allEx().filter(e => (picker.cat==="all" || e.cat===picker.cat) && toks.every(t => norm([e.en,e.pl,e.cs,e.sk,e.extra].join(" ")).includes(t)));
+  const listAll = list.filter(e => !picker.sel.includes(e.id));
+  list.length = 0; list.push(...listAll);
   list.sort((a,b) => exMain(a).localeCompare(exMain(b), locale()));
   const row = e => `<button class="pick" data-act="pickToggle" data-id="${e.id}" aria-pressed="${picker.sel.includes(e.id)}">${exLabel(e)}<span class="mark">${picker.sel.includes(e.id) ? picker.sel.indexOf(e.id)+1 : ""}</span></button>`;
   let h = "";
+  if(picker.sel.length){
+    h += `<div class="grp">Selected, in this order</div>` + picker.sel.map((id,i) => `<div class="selrow"><span class="mark on">${i+1}</span>${exLabel(getEx(id))}<div class="row" style="gap:0"><button class="icon" aria-label="Move up" data-act="pickSelUp" data-i="${i}" ${i?"":"disabled"}>↑</button><button class="icon" aria-label="Move down" data-act="pickSelDown" data-i="${i}" ${i<picker.sel.length-1?"":"disabled"}>↓</button><button class="icon" aria-label="Remove" data-act="pickToggle" data-id="${id}">✕</button></div></div>`).join("");
+    if(list.length) h += `<div class="grp">${toks.length || picker.cat!=="all" ? "Results" : "All exercises"}</div>`;
+  }
   if(!toks.length && picker.cat==="all"){
     Object.keys(CATS).forEach(c => { const g = list.filter(e=>e.cat===c); if(g.length) h += `<div class="grp">${esc(catName(c))}</div>` + g.map(row).join(""); });
   } else h += list.map(row).join("");
@@ -794,7 +984,7 @@ function renderPicker(keepInput){
       <div class="row"><select class="t" id="ntype">${Object.entries(TYPES).map(([k,v])=>`<option value="${k}" ${picker.newType===k?"selected":""}>${v}</option>`).join("")}</select>
       <select class="t" id="ncat">${Object.keys(CATS).map(c=>`<option value="${c}" ${picker.newCat===c?"selected":""}>${esc(catName(c))}</option>`).join("")}</select></div>
       <button class="btn wide" data-act="pickCreate">Create and select</button></div>`;
-  } else if(!list.length) h += `<div class="empty" style="margin-top:16px">Nothing here.</div>`;
+  } else if(!list.length && !picker.sel.length) h += `<div class="empty" style="margin-top:16px">Nothing here.</div>`;
   $("#plist").innerHTML = h;
   const n = picker.sel.length;
   $("#padd").textContent = n ? `Add ${n} exercise${n>1?"s":""}` : "Select exercises";
@@ -802,12 +992,120 @@ function renderPicker(keepInput){
   if(!keepInput) setTimeout(()=> $("#pq") && $("#pq").focus(), 50);
 }
 
+/* ---------- workout reorder sheet ---------- */
+let reorderOpen = false;
+function renderReorder(){
+  const Lr = $("#layer"), A = S.active;
+  if(!reorderOpen || !A){ Lr.innerHTML = ""; return; }
+  Lr.innerHTML = `<div class="sheet" role="dialog" aria-modal="true" aria-label="Exercise order"><div class="sheet-h"><div class="spread"><h2>Exercise order</h2><button class="btn primary sm" data-act="reorderClose">Done</button></div></div>
+    <div class="sheet-b">${A.exercises.map((x,i) => `<div class="selrow"><span class="mark on">${i+1}</span>${exLabel(getEx(x.exId))}<div class="row" style="gap:0"><button class="icon" aria-label="Move up" data-act="roUp" data-i="${i}" ${i?"":"disabled"}>↑</button><button class="icon" aria-label="Move down" data-act="roDown" data-i="${i}" ${i<A.exercises.length-1?"":"disabled"}>↓</button></div></div>`).join("")}
+    <button class="btn ghost wide" data-act="roShuffle" style="margin-top:14px">${ico("shuffle")}Random order</button></div></div>`;
+}
+
+/* ---------- plans as CSV ---------- */
+const CSV_HEAD = ["plan","plan_note","exercise","sets","reps","kg","rest","note","type"];
+const COL_ALIASES = {
+  plan:["plan","plan name","plan_name","nazwa planu","plán"], plan_note:["plan_note","plan note","notatka planu","opis planu"],
+  exercise:["exercise","cwiczenie","ćwiczenie","cvik"], sets:["sets","serie","série"], reps:["reps","powtórzenia","powtorzenia","opakování","opakovania","time","czas"],
+  kg:["kg","weight","ciężar","ciezar","váha"], rest:["rest","przerwa","odpočinek","odpočinok"], note:["note","notatka","uwagi","poznámka"], type:["type","typ"]
+};
+const csvCell = v => { v = v==null ? "" : String(v); return /[",;\n\r\t]/.test(v) ? '"' + v.replace(/"/g,'""') + '"' : v; };
+function plansToCSV(plans){
+  const rows = [CSV_HEAD];
+  plans.forEach(p => {
+    if(!p.items.length) rows.push([p.name, p.note||"", "", "", "", "", "", "", ""]);
+    p.items.forEach((it, i) => { const e = getEx(it.exId); rows.push([p.name||"Untitled plan", i===0 ? (p.note||"") : "", e.en, it.sets, it.reps, it.kg, it.rest, it.note||"", e.type]); });
+  });
+  return "\ufeff" + rows.map(r => r.map(csvCell).join(",")).join("\r\n") + "\r\n";
+}
+function parseCSV(text){
+  text = String(text||"").replace(/^\ufeff/, "");
+  const first = text.split(/\r?\n/)[0] || "", cnt = {",":0, ";":0, "\t":0};
+  let inQ = false; for(const ch of first){ if(ch==='"') inQ = !inQ; else if(!inQ && ch in cnt) cnt[ch]++; }
+  const best = Object.entries(cnt).sort((a,b)=>b[1]-a[1])[0], d = best[1] ? best[0] : ",";
+  const rows = []; let row = [], cell = "", q = false;
+  for(let i=0; i<text.length; i++){
+    const c = text[i];
+    if(q){ if(c==='"'){ if(text[i+1]==='"'){ cell+='"'; i++; } else q = false; } else cell += c; }
+    else if(c==='"') q = true;
+    else if(c===d){ row.push(cell); cell = ""; }
+    else if(c==="\n" || c==="\r"){ if(c==="\r" && text[i+1]==="\n") i++; row.push(cell); rows.push(row); row = []; cell = ""; }
+    else cell += c;
+  }
+  if(cell!=="" || row.length){ row.push(cell); rows.push(row); }
+  return rows.filter(r => r.some(c => c.trim()!==""));
+}
+function findExByName(name){
+  const strip = x => norm(x).replace(/\s*\(.*?\)\s*/g," ").replace(/\s+/g," ").trim();
+  const k = norm(name).trim(); if(!k) return null;
+  const all = allEx();
+  return all.find(e => [e.id,e.en,e.pl,e.cs,e.sk].some(x => x && norm(x).trim()===k))
+      || all.find(e => [e.en,e.pl,e.cs,e.sk].some(x => x && strip(x)===strip(name))) || null;
+}
+function previewCSV(text){
+  const rows = parseCSV(text); if(!rows.length) return {plans:[], newEx:[], error:"Nothing to import yet."};
+  const head = rows[0].map(h => norm(h).trim()), idx = {};
+  Object.entries(COL_ALIASES).forEach(([key, al]) => { const i = head.findIndex(h => al.map(norm).includes(h)); if(i>=0) idx[key] = i; });
+  let body = rows.slice(1);
+  if(idx.plan==null || idx.exercise==null){ CSV_HEAD.forEach((k,i) => idx[k] = i); body = rows; }
+  const get = (r,k) => idx[k]!=null ? String(r[idx[k]]??"").trim() : "";
+  const plans = [], byName = {}, newEx = new Set();
+  body.forEach(r => {
+    const pn = get(r,"plan") || "Imported plan";
+    let p = byName[pn]; if(!p){ p = byName[pn] = {name:pn, note:"", items:[]}; plans.push(p); }
+    if(!p.note && get(r,"plan_note")) p.note = get(r,"plan_note");
+    const exName = get(r,"exercise"); if(!exName) return;
+    const ex = findExByName(exName); if(!ex) newEx.add(exName);
+    const sets = parseInt(get(r,"sets")) || 3, reps = get(r,"reps"), t = get(r,"type").toLowerCase();
+    p.items.push({exName, exId: ex ? ex.id : null, sets, reps, kg:get(r,"kg"), rest:(get(r,"rest").match(/\d+/)||[""])[0], note:get(r,"note"),
+      type: ["w","bw","t"].includes(t) ? t : (reps.includes(":") ? "t" : "w")});
+  });
+  return {plans, newEx:[...newEx], error: plans.length ? "" : "No plans found in this text."};
+}
+function commitImport(pv){
+  const made = {};
+  pv.newEx.forEach(n => {
+    const it = pv.plans.flatMap(p=>p.items).find(i => i.exName===n);
+    const c = {id:"c_"+uid(), en:n, pl:n, cs:n, sk:n, cat:"other", type:it ? it.type : "w"};
+    S.custom.push(c); made[n] = c.id;
+  });
+  rebuildEx();
+  const names = new Set(S.plans.map(p=>p.name));
+  pv.plans.forEach(p => {
+    let name = p.name; while(names.has(name)) name += " (imported)"; names.add(name);
+    S.plans.push({id:uid(), name, note:p.note, items:p.items.map(i => ({exId: i.exId || made[i.exName], sets:i.sets, reps:i.reps, kg:i.kg, rest:i.rest, note:i.note}))});
+  });
+  save();
+}
+let importer = null;
+function renderImport(){
+  const Lr = $("#layer");
+  if(!importer){ Lr.innerHTML = ""; return; }
+  const pv = importer.pv;
+  let prev = "";
+  if(pv){
+    if(pv.error) prev = `<div class="empty">${esc(pv.error)}</div>`;
+    else prev = pv.plans.map(p => `<div class="item"><strong>${esc(p.name)}</strong>${p.note?`<div class="sub">${esc(p.note)}</div>`:""}<div class="setline" style="margin-top:6px">${p.items.map(i => esc(i.exId ? exMain(getEx(i.exId)) : i.exName) + (i.exId ? "" : `<span class="newtag">new</span>`) + ` <span style="opacity:.75">${esc(i.sets)} × ${esc(i.reps||"?")}</span>`).join("<br>")}</div></div>`).join("")
+      + (pv.newEx.length ? `<p class="sub" style="margin:0">Names marked <span class="newtag" style="margin:0">new</span> are not in the exercise list, so they will be added as your own exercises (group: ${esc(catName("other"))}).</p>` : "");
+  }
+  Lr.innerHTML = `<div class="sheet" role="dialog" aria-modal="true" aria-label="Import plans"><div class="sheet-h"><div class="spread"><h2>Import plans</h2><button class="btn ghost sm" data-act="impClose">Close</button></div></div>
+    <div class="sheet-b stack">
+      <p class="sub" style="margin:0">Use a CSV file, separated by commas or semicolons. Columns: plan, plan_note, exercise, sets, reps, kg, rest, note, type. Only <strong>plan</strong> and <strong>exercise</strong> are required. Exercise names work in any of the four languages. Imported plans are added next to your plans; nothing gets replaced.</p>
+      <div class="row"><button class="btn" style="flex:1" data-act="impFile">${ico("import")}Choose file</button><button class="btn ghost" style="flex:1" data-act="impExample">${ico("export")}Example file</button></div>
+      <input type="file" id="csvFile" accept=".csv,text/csv,text/plain" hidden>
+      <label class="f">Or paste the text here<textarea class="t" id="csvText" style="min-height:130px;font-size:.85rem;margin-top:4px">${esc(importer.text)}</textarea></label>
+      <button class="btn wide" data-act="impCheck">Check</button>
+      ${prev}</div>
+    <div class="sheet-f"><button class="btn primary wide" data-act="impGo" ${pv && !pv.error ? "" : "disabled"}>${pv && !pv.error ? `Import ${pv.plans.length} plan${pv.plans.length>1?"s":""}` : "Check the text first"}</button></div></div>`;
+  $("#csvText").addEventListener("input", e => { importer.text = e.target.value; });
+}
+
 /* ---------- workout helpers ---------- */
 function blankSets(n){ return Array.from({length:Math.max(1,n||3)}, () => ({kg:"", reps:"", t:"", done:false})); }
 function startWorkout(plan){
   if(S.active){ toast("Finish or discard the current workout first."); view="workout"; sub=null; render(); return; }
   S.active = {id:uid(), planId:plan?plan.id:null, name:plan?(plan.name||"Workout"):"Workout", note:plan?plan.note||"":"", start:Date.now(), restEnd:null, restTotal:0,
-    exercises: plan ? plan.items.map(it => ({exId:it.exId, rest:num(it.rest)||null, target:{sets:it.sets, reps:it.reps, kg:it.kg}, sets:blankSets(num(it.sets) || (lastSets(it.exId)||[]).length || 3)})) : []};
+    pausedAt:null, pausedMs:0, exercises: plan ? plan.items.map(it => ({exId:it.exId, rest:num(it.rest)||null, note:it.note||"", target:{sets:it.sets, reps:it.reps, kg:it.kg}, sets:blankSets(num(it.sets) || (lastSets(it.exId)||[]).length || 3)})) : []};
   save(); view="workout"; sub=null; render(); syncWake(); window.scrollTo(0,0);
 }
 async function finishWorkout(){
@@ -822,7 +1120,7 @@ async function finishWorkout(){
     return;
   }
   if(open && !await ask(`${open} set${open>1?"s are":" is"} not marked done and won't be saved. Finish anyway?`, "Finish")) return;
-  const w = {id:A.id, planId:A.planId, name:A.name||"Workout", start:A.start, end:Math.max(Date.now(), A.start+60000), exercises:done};
+  const w = {id:A.id, planId:A.planId, name:A.name||"Workout", start:A.start, end:A.start + Math.max(60000, elapsedMs(A)), exercises:done};
   S.history.push(w); S.history.sort((a,b)=>a.start-b.start); S.active=null; save(); syncWake();
   const pr = workoutPRs(w);
   view="history"; sub={k:"hist", id:w.id}; render(); window.scrollTo(0,0);
@@ -843,7 +1141,7 @@ function render(){
 }
 function tick(){
   const A = S.active, el = $("#elapsed");
-  if(A && el) el.textContent = fmtTime(Math.max(0,(Date.now()-A.start)/1000));
+  if(A && el) el.textContent = fmtTime(Math.max(0, elapsedMs(A)/1000));
   const R = $("#rest");
   if(A && A.restEnd){
     const left = (A.restEnd - Date.now())/1000;
@@ -865,27 +1163,56 @@ document.addEventListener("focusin", ev => {
 document.addEventListener("click", async ev => {
   const b = ev.target.closest("[data-act],[data-tab]");
   if(!b || b.disabled) return;
-  if(b.dataset.tab){ if(sub && sub.k==="hist" && sub.edit) closeHistEdit(); view = b.dataset.tab; sub = null; render(); window.scrollTo(0,0); return; }
+  if(b.dataset.tab){
+    const to = b.dataset.tab;
+    if(to===view && sub && sub.k==="plan") return;
+    if(view==="plans" && sub && sub.k==="plan"){
+      if(isDirty()){
+        const r = await askChoice(`You have unsaved changes in "${draftName()}".`, [{v:"save",label:"Save",kind:"primary"},{v:"discard",label:"Discard changes",kind:"danger"},{v:"keep",label:"Keep for later",kind:"ghost"}]);
+        if(!r) return;
+        if(r==="save"){ commitDraft(); toast("Plan saved"); } else if(r==="discard"){ S.draft = null; save(); }
+      } else { S.draft = null; save(); }
+    }
+    if(sub && sub.k==="hist" && sub.edit) closeHistEdit();
+    view = to; sub = null;
+    if(to==="plans" && S.draft && isDirty()) sub = {k:"plan", id:S.draft.id};
+    render(); window.scrollTo(0,0); return;
+  }
   const a = b.dataset.act, A = S.active;
-  const plan = sub && sub.k==="plan" ? S.plans.find(p=>p.id===sub.id) : null;
+  const plan = sub && sub.k==="plan" && S.draft ? S.draft.data : null;
   const hw = sub && sub.k==="hist" ? S.history.find(w=>w.id===sub.id) : null;
   switch(a){
     case "tab": view=b.dataset.v; sub=null; render(); break;
-    case "back": if(sub && sub.k==="hist" && sub.edit) closeHistEdit(); sub = sub && sub.from ? sub.from : null; if(sub && sub.k==="ex") view="progress"; render(); window.scrollTo(0,0); break;
-    case "newPlan": { const p={id:uid(), name:"", note:"", items:[]}; S.plans.push(p); save(); sub={k:"plan", id:p.id}; render(); setTimeout(()=>$("#pname")&&$("#pname").focus(),30); break; }
-    case "editPlan": sub={k:"plan", id:b.dataset.id}; render(); window.scrollTo(0,0); break;
+    case "back": if(sub && sub.k==="plan"){ if(await leaveDraft()){ sub=null; render(); window.scrollTo(0,0); } break; }
+      if(sub && sub.k==="hist" && sub.edit) closeHistEdit(); sub = sub && sub.from ? sub.from : null; if(sub && sub.k==="ex") view="progress"; render(); window.scrollTo(0,0); break;
+    case "newPlan": { if(!await leaveDraft()) break; openDraft({id:uid(), name:"", note:"", items:[]}, true); render(); window.scrollTo(0,0); setTimeout(()=>$("#pname")&&$("#pname").focus(),30); break; }
+    case "editPlan": { const id=b.dataset.id; if(S.draft && S.draft.id!==id && !await leaveDraft()) break; if(S.draft && S.draft.id===id) sub={k:"plan", id}; else openDraft(S.plans.find(p=>p.id===id), false); render(); window.scrollTo(0,0); break; }
+    case "draftOpen": sub={k:"plan", id:S.draft.id}; render(); window.scrollTo(0,0); break;
+    case "draftDiscard": if(await ask(`Discard the unsaved changes in "${draftName()}"?`, "Discard", true)){ S.draft=null; save(); render(); } break;
+    case "planSave": commitDraft(); sub=null; render(); window.scrollTo(0,0); toast("Plan saved"); break;
+    case "planDiscard": if(!isDirty() || await ask("Discard your changes to this plan?", "Discard", true)){ S.draft=null; save(); sub=null; render(); window.scrollTo(0,0); } break;
+    case "planView": S.settings.planView=b.dataset.v; save(); render(); break;
+    case "expPlans": saveTextFile(`lifts-plans-${new Date().toISOString().slice(0,10)}.csv`, plansToCSV(S.plans), "text/csv"); break;
+    case "expPlan": saveTextFile(`lifts-plan-${(plan.name||"plan").toLowerCase().replace(/[^a-z0-9]+/gi,"-").replace(/^-|-$/g,"") || "plan"}.csv`, plansToCSV([plan]), "text/csv"); break;
+    case "impPlans": importer={text:"", pv:null}; renderImport(); break;
+    case "impClose": importer=null; renderImport(); break;
+    case "impFile": $("#csvFile").click(); break;
+    case "impExample": saveTextFile("lifts-plans-example.csv", plansToCSV([TEMPLATES[0],TEMPLATES[4]].map(t=>({name:t.name, note:t.note, items:tplToItems(t)}))), "text/csv"); break;
+    case "impCheck": importer.text=$("#csvText").value; importer.pv=previewCSV(importer.text); renderImport(); break;
+    case "impGo": { const n=importer.pv.plans.length; commitImport(importer.pv); importer=null; renderImport(); view="plans"; sub=null; render(); window.scrollTo(0,0); toast(`Imported ${n} plan${n>1?"s":""}`); break; }
     case "startPlan": startWorkout(S.plans.find(p=>p.id===b.dataset.id)); break;
     case "startTpl": { const t=TEMPLATES.find(x=>x.id===b.dataset.id); startWorkout({id:t.id, name:t.name, note:t.note, items:tplToItems(t)}); break; }
-    case "copyTpl": { const t=TEMPLATES.find(x=>x.id===b.dataset.id); const p={id:uid(), name:t.name, note:t.note, items:tplToItems(t)}; S.plans.push(p); save(); sub={k:"plan", id:p.id}; render(); window.scrollTo(0,0); toast("Copied. Change anything you like."); break; }
+    case "copyTpl": { if(!await leaveDraft()) break; const t=TEMPLATES.find(x=>x.id===b.dataset.id); const p={id:uid(), name:t.name, note:t.note, items:tplToItems(t)}; S.plans.push(p); save(); openDraft(p, false); render(); window.scrollTo(0,0); toast("Copied. Change anything you like."); break; }
     case "startEmpty": startWorkout(null); break;
     case "itemUp": case "itemDown": { const i=+b.dataset.i, j=a==="itemUp"?i-1:i+1; [plan.items[i],plan.items[j]]=[plan.items[j],plan.items[i]]; save(); render(); break; }
     case "itemDel": plan.items.splice(+b.dataset.i,1); save(); render(); break;
-    case "dupPlan": { const c=JSON.parse(JSON.stringify(plan)); c.id=uid(); c.name=(plan.name||"Plan")+" (copy)"; S.plans.push(c); save(); sub={k:"plan",id:c.id}; render(); toast("Plan duplicated"); break; }
-    case "delPlan": if(await ask(`Delete the plan "${plan.name||"Untitled plan"}"? Past workouts stay in History.`, "Delete", true)){ S.plans=S.plans.filter(p=>p.id!==plan.id); save(); sub=null; render(); } break;
+    case "dupPlan": { const c=clone(plan); c.id=uid(); c.name=(plan.name||"Plan")+" (copy)"; S.plans.push(c); save(); toast(`Saved a copy: ${c.name}`); break; }
+    case "delPlan": if(await ask(`Delete the plan "${draftName()}"? Past workouts stay in History.`, "Delete", true)){ S.plans=S.plans.filter(p=>p.id!==plan.id); S.draft=null; save(); sub=null; render(); } break;
     case "pick": openPicker(b.dataset.v); break;
     case "pickClose": picker=null; renderPicker(); break;
     case "pickCat": picker.cat=b.dataset.v; renderPicker(true); break;
     case "pickToggle": { const id=b.dataset.id, i=picker.sel.indexOf(id); i<0 ? picker.sel.push(id) : picker.sel.splice(i,1); renderPicker(true); break; }
+    case "pickSelUp": case "pickSelDown": { const i=+b.dataset.i, j=a==="pickSelUp"?i-1:i+1; [picker.sel[i],picker.sel[j]]=[picker.sel[j],picker.sel[i]]; renderPicker(true); break; }
     case "pickCreate": {
       const name = picker.q.trim(); if(!name) break;
       picker.newType = $("#ntype").value; picker.newCat = $("#ncat").value;
@@ -893,7 +1220,7 @@ document.addEventListener("click", async ev => {
       S.custom.push(c); save(); rebuildEx(); picker.sel.push(c.id); picker.q=""; $("#pq").value=""; renderPicker(true); toast(`Created ${name}`); break;
     }
     case "pickAdd": {
-      if(picker.mode==="plan" && plan) picker.sel.forEach(id => plan.items.push({exId:id, sets:3, reps:getEx(id).type==="t"?"1:00":"8–12", kg:"", rest:""}));
+      if(picker.mode==="plan" && plan) picker.sel.forEach(id => plan.items.push({exId:id, sets:3, reps:getEx(id).type==="t"?"1:00":"8–12", kg:"", rest:"", note:""}));
       if(picker.mode==="workout" && A) picker.sel.forEach(id => A.exercises.push({exId:id, rest:null, target:null, sets:blankSets((lastSets(id)||[]).length || 3)}));
       if(picker.mode==="hist" && hw) picker.sel.forEach(id => hw.exercises.push({exId:id, sets:[getEx(id).type==="t" ? {t:null} : {kg:null, reps:null}]}));
       picker=null; renderPicker(); save(); render(); break;
@@ -911,7 +1238,13 @@ document.addEventListener("click", async ev => {
     }
     case "addSet": { const x=A.exercises[+b.dataset.x], l=x.sets[x.sets.length-1]; x.sets.push({kg:l?l.kg:"", reps:l?l.reps:"", t:l?l.t:"", done:false}); save(); render(); break; }
     case "delSet": A.exercises[+b.dataset.x].sets.pop(); save(); render(); break;
-    case "wxUp": { const i=+b.dataset.x; [A.exercises[i-1],A.exercises[i]]=[A.exercises[i],A.exercises[i-1]]; save(); render(); break; }
+    case "wxUp": case "wxDown": { const i=+b.dataset.x, j=a==="wxUp"?i-1:i+1; [A.exercises[i],A.exercises[j]]=[A.exercises[j],A.exercises[i]]; save(); render(); break; }
+    case "reorderOpen": reorderOpen=true; renderReorder(); break;
+    case "reorderClose": reorderOpen=false; renderReorder(); render(); break;
+    case "roUp": case "roDown": { const i=+b.dataset.i, j=a==="roUp"?i-1:i+1; [A.exercises[i],A.exercises[j]]=[A.exercises[j],A.exercises[i]]; save(); renderReorder(); break; }
+    case "roShuffle": { const E=A.exercises; for(let i=E.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [E[i],E[j]]=[E[j],E[i]]; } save(); renderReorder(); break; }
+    case "timerPause": if(A && !A.pausedAt){ A.pausedAt=Date.now(); save(); render(); } break;
+    case "timerResume": if(A && A.pausedAt){ A.pausedMs=(A.pausedMs||0)+(Date.now()-A.pausedAt); A.pausedAt=null; save(); render(); } break;
     case "wxDel": if(await ask(`Remove ${exMain(getEx(A.exercises[+b.dataset.x].exId))} from this workout?`, "Remove", true)){ A.exercises.splice(+b.dataset.x,1); save(); render(); } break;
     case "finish": finishWorkout(); break;
     case "discard": if(await ask("Discard this workout? Nothing from it will be saved.", "Discard", true)){ S.active=null; save(); syncWake(); render(); } break;
@@ -926,13 +1259,22 @@ document.addEventListener("click", async ev => {
     case "hDelEx": if(await ask(`Remove ${exMain(getEx(hw.exercises[+b.dataset.x].exId))} from this workout?`, "Remove", true)){ hw.exercises.splice(+b.dataset.x,1); save(); render(); } break;
     case "delHist": if(await ask("Delete this workout from History?", "Delete", true)){ S.history=S.history.filter(w=>w.id!==sub.id); save(); sub=sub.from||null; if(sub && sub.k==="ex") view="progress"; render(); } break;
     case "histToPlan": {
-      const p={id:uid(), name:hw.name, note:"", items:hw.exercises.map(x=>{ const t=getEx(x.exId).type==="t", s=x.sets[0]||{}; return {exId:x.exId, sets:x.sets.length, reps:t?fmtTime(s.t):String(s.reps??""), kg:t?"":(s.kg??""), rest:""}; })};
-      S.plans.push(p); save(); view="plans"; sub={k:"plan", id:p.id}; render(); toast("Plan created"); break;
+      if(!await leaveDraft()) break;
+      const p={id:uid(), name:hw.name, note:"", items:hw.exercises.map(x=>{ const t=getEx(x.exId).type==="t", s=x.sets[0]||{}; return {exId:x.exId, sets:x.sets.length, reps:t?fmtTime(s.t):String(s.reps??""), kg:t?"":(s.kg??""), rest:"", note:""}; })};
+      S.plans.push(p); save(); view="plans"; openDraft(p, false); render(); toast("Plan created"); break;
     }
     case "openEx": sub={k:"ex", id:b.dataset.id}; render(); window.scrollTo(0,0); break;
     case "exMetric": sub.m=b.dataset.v; render(); break;
     case "lang": S.settings.lang=b.dataset.v; document.documentElement.lang=b.dataset.v; save(); render(); break;
     case "alt": S.settings.alt=b.dataset.v; save(); render(); break;
+    case "theme": S.settings.ap.theme=b.dataset.v; save(); applyAppearance(); render(); break;
+    case "resetColors": S.settings.ap.custom={}; save(); applyAppearance(); render(); break;
+    case "resetLook": if(await ask("Reset theme, fonts, text size and colours to the defaults?", "Reset")){ const dev=S.settings.ap.dev; S.settings.ap=apDefaults(); S.settings.ap.dev=dev; save(); applyAppearance(); render(); } break;
+    case "checkUpdate": { try{ const r = navigator.serviceWorker && await navigator.serviceWorker.getRegistration(); if(r) await r.update(); }catch(e){} toast("Reloading…"); setTimeout(()=>location.reload(), 500); break; }
+    case "clearCache": if(await ask("Delete the offline copy of the app? Your plans and workouts stay. The app reloads and saves itself again while online.", "Clear")){
+        try{ const ks = await caches.keys(); await Promise.all(ks.map(k=>caches.delete(k))); const rs = navigator.serviceWorker ? await navigator.serviceWorker.getRegistrations() : []; await Promise.all(rs.map(r=>r.unregister())); }catch(e){}
+        location.reload(); }
+      break;
     case "export": exportData(); break;
     case "import": $("#importFile").click(); break;
     case "copyBackup": { const ta=$("#backupText"); ta.select(); try{ await navigator.clipboard.writeText(ta.value); toast("Copied"); }catch(e){ toast("Select the text and copy it manually"); } break; }
@@ -941,7 +1283,7 @@ document.addEventListener("click", async ev => {
       if(await ask(used ? "This exercise is used in plans or History. Delete it anyway? It will show as 'Removed exercise' there." : "Delete this exercise?", "Delete", true)){ S.custom=S.custom.filter(c=>c.id!==b.dataset.id); save(); rebuildEx(); render(); }
       break;
     }
-    case "wipe": if(await ask("Erase all plans, history and settings on this device? This cannot be undone.", "Erase", true)){ S=defaults(); save(); rebuildEx(); view="plans"; sub=null; render(); } break;
+    case "wipe": if(await ask("Erase all plans, history and settings on this device? This cannot be undone.", "Erase", true)){ S=defaults(); save(); rebuildEx(); applyAppearance(); view="plans"; sub=null; render(); } break;
   }
 });
 function closeHistEdit(){
@@ -953,7 +1295,7 @@ function closeHistEdit(){
 
 document.addEventListener("input", ev => {
   const el = ev.target, k = el.dataset.bind; if(!k) return;
-  const plan = sub && sub.k==="plan" ? S.plans.find(p=>p.id===sub.id) : null;
+  const plan = sub && sub.k==="plan" && S.draft ? S.draft.data : null;
   const hw = sub && sub.k==="hist" ? S.history.find(w=>w.id===sub.id) : null;
   if(k==="planName" && plan) plan.name = el.value;
   else if(k==="planNote" && plan) plan.note = el.value;
@@ -969,10 +1311,21 @@ document.addEventListener("input", ev => {
   else if(k==="sound") S.settings.sound = el.checked;
   else if(k==="wake"){ S.settings.wake = el.checked; syncWake(); }
   else if(k==="templates") S.settings.templates = el.checked;
+  else if(k==="apFont"){ S.settings.ap.font = el.value; applyAppearance(); }
+  else if(k==="apHead"){ S.settings.ap.head = el.value; applyAppearance(); }
+  else if(k==="apScale"){ S.settings.ap.scale = +el.value; $("#scaleVal").textContent = el.value+"%"; applyAppearance(); }
+  else if(k==="apRadius"){ S.settings.ap.radius = +el.value; $("#radVal").textContent = el.value+"px"; applyAppearance(); }
+  else if(k==="apColor"){ S.settings.ap.custom[el.dataset.k] = el.value; applyAppearance(); }
+  else if(k==="apDev"){ S.settings.ap.dev = el.checked; save(); render(); return; }
   save();
 });
 
 document.addEventListener("change", ev => {
+  if(ev.target.dataset && ev.target.dataset.bind==="apColor"){ save(); render(); return; }
+  if(ev.target.id==="csvFile"){
+    const f = ev.target.files[0]; if(!f || !importer) return;
+    const r = new FileReader(); r.onload = () => { importer.text = String(r.result); importer.pv = previewCSV(importer.text); renderImport(); }; r.readAsText(f); return;
+  }
   if(ev.target.id!=="importFile") return;
   const f = ev.target.files[0]; if(!f) return;
   const r = new FileReader();
@@ -984,9 +1337,20 @@ async function importText(txt){
   let d; try{ d = JSON.parse(txt); }catch(e){ toast("That file is not a valid backup."); return; }
   if(!d || !Array.isArray(d.plans) || !Array.isArray(d.history)){ toast("That file is not a Lifts backup."); return; }
   if(!await ask(`Replace everything on this device with the backup (${d.plans.length} plans, ${d.history.length} workouts)?`, "Replace", true)) return;
-  S = hydrate(d); save(); rebuildEx(); view="plans"; sub=null; render(); toast("Backup restored");
+  S = hydrate(d); save(); rebuildEx(); applyAppearance(); view="plans"; sub=null; render(); toast("Backup restored");
 }
 
+async function saveTextFile(filename, data, mime){
+  if(downloads){
+    try{ await downloads.save({filename, data}); toast("Saved " + filename); return true; }
+    catch(e){ if(e && e.code==="declined") return true; }
+  }
+  try{
+    const url = URL.createObjectURL(new Blob([data], {type:mime}));
+    const a = document.createElement("a"); a.href = url; a.download = filename; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url), 4000); toast(filename + " saved to Downloads"); return true;
+  }catch(e){ toast("Could not save the file on this device."); return false; }
+}
 async function exportData(){
   const data = JSON.stringify(S, null, 1);
   const filename = `lifts-backup-${new Date().toISOString().slice(0,10)}.json`;
@@ -1006,6 +1370,7 @@ async function exportData(){
 }
 
 document.documentElement.lang = S.settings.lang;
+applyAppearance();
 render(); syncWake();
 if("serviceWorker" in navigator && window.isSecureContext){ navigator.serviceWorker.register("sw.js").catch(()=>{}); }
 </script>

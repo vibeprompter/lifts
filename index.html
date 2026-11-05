@@ -183,8 +183,15 @@ input[type=checkbox]{accent-color:var(--accent)}
 .wbar .spread{flex-wrap:wrap;row-gap:8px}
 .tbtn{flex:none;width:50px;height:50px;border-radius:var(--r);border:1px solid var(--line);background:var(--surface);color:var(--accent);display:grid;place-items:center}
 .tbtn .ic{width:24px;height:24px}
-input.dt{padding-right:6px}
-input.dt::-webkit-calendar-picker-indicator{width:22px;height:22px;padding:6px;margin-left:12px;margin-right:2px;cursor:pointer;opacity:.85;border-radius:var(--r-sm)}
+.dtwrap{position:relative;display:block;margin-top:4px}
+.dtwrap .ic{position:absolute;right:14px;top:50%;transform:translateY(-50%);width:22px;height:22px;pointer-events:none;color:var(--ink);opacity:.75}
+input.dt{-webkit-appearance:none;appearance:none;display:block;width:100%;min-height:46px;padding-right:48px;text-align:left;position:relative}
+input.dt::-webkit-calendar-picker-indicator{position:absolute;right:0;top:0;width:48px;height:100%;margin:0;padding:0;opacity:0;cursor:pointer}
+input.dt::-webkit-inner-spin-button,input.dt::-webkit-clear-button{display:none}
+.clockbtn{background:none;border:0;padding:0;color:inherit;text-align:left}
+.parrows{display:flex;gap:0;flex:none}
+.parrows .icon{min-width:36px;min-height:36px}
+.plan.mini .parrows{justify-content:flex-end;margin:-4px -6px 0 0}
 .linkbtn{background:none;border:0;color:var(--accent);font-weight:600;padding:4px 2px;font-size:.85rem;min-height:32px}
 .exnote{display:block;border-left:3px solid var(--accent);padding-left:8px;color:var(--ink);margin:2px 0}
 .tgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:0 14px 8px}
@@ -393,12 +400,13 @@ const ICONS = {
   list:'<path d="M4 6h16M4 12h16M4 18h16"/>',
   shuffle:'<path d="M16 3h5v5"/><path d="M4 20L21 3"/><path d="M21 16v5h-5"/><path d="M15 15l6 6"/><path d="M4 4l5 5"/>',
   reorder:'<path d="M8 20V4M4 8l4-4 4 4"/><path d="M16 4v16M12 16l4 4 4-4"/>',
-  check:'<path d="M5 12l5 5L20 7"/>'
+  check:'<path d="M5 12l5 5L20 7"/>',
+  chev:'<path d="M6 9l6 6 6-6"/>'
 };
 const ico = n => `<svg class="ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICONS[n]}</svg>`;
 
 /* ---------- appearance ---------- */
-const APP_VERSION = "5";
+const APP_VERSION = "6";
 const T = (bg,surface,surface2,ink,muted,line,accent,accentInk,accentSoft,danger,success) => ({bg,surface,surface2,ink,muted,line,accent,"accent-ink":accentInk,"accent-soft":accentSoft,danger,success});
 const THEMES = {
   light:   {g:"basic", name:"Blue light", dark:false, v:T("#F2F4F8","#FFFFFF","#E8ECF3","#1A1F2B","#687085","#DDE2EA","#2F6BFF","#FFFFFF","#E5EDFF","#E5484D","#16A271")},
@@ -507,6 +515,7 @@ function save(){
 const clone = o => JSON.parse(JSON.stringify(o));
 function isDirty(){
   const D = S.draft; if(!D) return false;
+  if(D.base!=null) return JSON.stringify(D.data) !== D.base;
   if(D.isNew) return !!(D.data.name.trim() || D.data.note.trim() || D.data.items.length);
   const p = S.plans.find(x=>x.id===D.id); if(!p) return true;
   return JSON.stringify(p) !== JSON.stringify(D.data);
@@ -519,7 +528,7 @@ function commitDraft(){
   if(i<0) S.plans.push(p); else S.plans[i] = p;
   S.draft = null; save();
 }
-function openDraft(p, isNew){ S.draft = {id:p.id, isNew:!!isNew, data:clone(p)}; save(); sub = {k:"plan", id:p.id}; }
+function openDraft(p, isNew, fromTpl){ S.draft = {id:p.id, isNew:!!isNew, fromTpl:fromTpl||null, data:clone(p), base:JSON.stringify(p)}; save(); sub = {k:"plan", id:p.id}; }
 async function leaveDraft(){ // true = ok to leave
   if(!S.draft) return true;
   if(!isDirty()){ S.draft = null; save(); return true; }
@@ -714,30 +723,33 @@ let sub = null;      // {k:"plan",id} | {k:"hist",id,edit} | {k:"ex",id,m}
 let picker = null;
 
 /* ---------- PLANS ---------- */
-function planCard(p, tpl, mini){
+function planCard(p, tpl, mini, idx, total){
   const names = p.items.map(i => exMain(getEx(tpl ? i[0] : i.exId)));
   const last = [...S.history].reverse().find(w => w.planId===p.id);
   const open = `data-act="${tpl?"viewTpl":"viewPlan"}" data-id="${p.id}" role="button" tabindex="0"`;
-  const btns = tpl
-    ? `<button class="btn primary sm" ${mini?'style="flex:1"':""} data-act="startTpl" data-id="${p.id}">Start</button><button class="btn sm" data-act="copyTpl" data-id="${p.id}">${mini?"Copy":"Copy to my plans"}</button>`
-    : `<button class="btn primary sm" ${mini?'style="flex:1"':""} data-act="startPlan" data-id="${p.id}" ${p.items.length?"":"disabled"}>Start</button><button class="btn sm" data-act="editPlan" data-id="${p.id}">Edit</button>`;
-  if(mini) return `<div class="panel plan mini ${tpl?"tpl":""}" ${open}><h2>${esc(p.name||"Untitled plan")}</h2><div class="sub" style="margin:4px 0 10px">${names.length} exercise${names.length===1?"":"s"}${last?`, ${esc(fmtShort(last.start))}`:""}</div><div class="row" style="gap:6px">${btns}</div></div>`;
-  return `<div class="panel plan ${tpl?"tpl":""}" ${open}><div class="spread"><h2>${esc(p.name||"Untitled plan")}</h2>${last?`<span class="sub">${esc(fmtDate(last.start))}</span>`:""}</div>
+  const mv = tpl ? "tplMove" : "planMove";
+  const arrows = total>1 ? `<div class="parrows"><button class="icon" aria-label="Move earlier" data-act="${mv}" data-i="${idx}" data-d="-1" ${idx?"":"disabled"}>${mini?"←":"↑"}</button><button class="icon" aria-label="Move later" data-act="${mv}" data-i="${idx}" data-d="1" ${idx<total-1?"":"disabled"}>${mini?"→":"↓"}</button></div>` : "";
+  const startBtn = tpl
+    ? `<button class="btn primary sm" ${mini?'style="flex:1"':""} data-act="startTpl" data-id="${p.id}">Start</button>`
+    : `<button class="btn primary sm" ${mini?'style="flex:1"':""} data-act="startPlan" data-id="${p.id}" ${p.items.length?"":"disabled"}>Start</button>`;
+  if(mini) return `<div class="panel plan mini ${tpl?"tpl":""}" ${open}>${arrows}<h2>${esc(p.name||"Untitled plan")}</h2><div class="sub" style="margin:4px 0 10px">${names.length} exercise${names.length===1?"":"s"}${last?`, ${esc(fmtShort(last.start))}`:""}</div><div class="row" style="gap:6px">${startBtn}</div></div>`;
+  return `<div class="panel plan ${tpl?"tpl":""}" ${open}><div class="spread" style="align-items:flex-start"><div><h2>${esc(p.name||"Untitled plan")}</h2>${last?`<span class="sub">Last: ${esc(fmtDate(last.start))}</span>`:""}</div>${arrows}</div>
     <div class="names">${names.length ? esc(names.slice(0,5).join(", ")) + (names.length>5 ? ` and ${names.length-5} more` : "") : "No exercises yet"}</div>
-    <div class="row">${btns}</div></div>`;
+    <div class="row">${startBtn}<span class="sub">Tap the card to view or edit</span></div></div>`;
 }
+const viewSwitch = () => { const grid = S.settings.planView==="grid"; return `<div class="seg seg-ic" role="group" aria-label="Plan layout"><button data-act="planView" data-v="list" aria-pressed="${!grid}" aria-label="List view">${ico("list")}</button><button data-act="planView" data-v="grid" aria-pressed="${grid}" aria-label="Compact grid view">${ico("grid")}</button></div>`; };
+const planList = () => { const grid = S.settings.planView==="grid"; return `<div class="${grid?"plangrid":"stack"}">${S.plans.map((p,i) => planCard(p, false, grid, i, S.plans.length)).join("")}</div>`; };
 function vPlans(){
   if(sub && sub.k==="plan") return vPlanEdit();
-  if(sub && sub.k==="pview") return vPlanView();
   const grid = S.settings.planView==="grid", wrapCls = grid ? "plangrid" : "stack";
-  let h = `<div class="spread"><h1>Plans</h1><div class="seg seg-ic" role="group" aria-label="Plan layout"><button data-act="planView" data-v="list" aria-pressed="${!grid}" aria-label="List view">${ico("list")}</button><button data-act="planView" data-v="grid" aria-pressed="${grid}" aria-label="Compact grid view">${ico("grid")}</button></div></div><div class="stack">`;
+  let h = `<div class="spread"><h1>Plans</h1>${viewSwitch()}</div><div class="stack">`;
   if(S.active) h += `<div class="banner"><div><strong>${esc(S.active.name)}</strong><div style="opacity:.85;font-size:.9rem">Workout in progress</div></div><button class="btn sm" data-act="tab" data-v="workout">Resume</button></div>`;
   if(S.draft && isDirty()) h += `<div class="panel spread" style="border-color:var(--accent)"><div><strong>Unsaved changes</strong><div class="sub">${esc(draftName())}</div></div><div class="row"><button class="btn ghost sm" data-act="draftDiscard">Discard</button><button class="btn primary sm" data-act="draftOpen">Continue</button></div></div>`;
   h += `<div class="row"><button class="btn primary" style="flex:1" data-act="newPlan">New plan</button><button class="btn ghost" style="flex:1" data-act="startEmpty">Empty workout</button></div></div>`;
-  h += `<div class="spread" style="margin:22px 0 8px;flex-wrap:wrap"><h3 style="margin:0">My plans</h3><div class="row" style="gap:6px">${S.plans.length>1?`<button class="btn ghost sm" data-act="reorderOpen" data-v="plans" aria-label="Reorder my plans">${ico("reorder")}</button>`:""}<button class="btn ghost sm" data-act="impPlans">${ico("import")}Import</button><button class="btn ghost sm" data-act="expPlans" ${S.plans.length?"":"disabled"}>${ico("export")}Export</button></div></div>`;
+  h += `<div class="spread" style="margin:22px 0 8px;flex-wrap:wrap"><h3 style="margin:0">My plans</h3><div class="row" style="gap:6px"><button class="btn ghost sm" data-act="impPlans">${ico("import")}Import</button><button class="btn ghost sm" data-act="expPlans" ${S.plans.length?"":"disabled"}>${ico("export")}Export</button></div></div>`;
   if(!S.plans.length) h += `<div class="empty">No plans yet. Tap <strong>New plan</strong>, import a CSV file, or copy a template below.</div>`;
-  else h += `<div class="${wrapCls}">${S.plans.map(p => planCard(p, false, grid)).join("")}</div>`;
-  if(S.settings.templates) h += `<div class="spread" style="margin:22px 0 8px"><h3 style="margin:0">Templates</h3><button class="btn ghost sm" data-act="reorderOpen" data-v="tpl" aria-label="Reorder templates">${ico("reorder")}</button></div><div class="${wrapCls}">${orderedTpl().map(t => planCard(t, true, grid)).join("")}</div>`;
+  else h += planList();
+  if(S.settings.templates){ const T = orderedTpl(); h += `<h3>Templates</h3><div class="${wrapCls}">${T.map((t,i) => planCard(t, true, grid, i, T.length)).join("")}</div>`; }
   return h;
 }
 function vPlanView(){
@@ -762,9 +774,11 @@ function tplToItems(t){ return t.items.map(([exId, sets, reps, rest]) => ({exId,
 
 function vPlanEdit(){
   const p = S.draft && S.draft.id===sub.id ? S.draft.data : null;
-  if(!p){ sub=null; return vPlans(); }
-  const bar = `<div class="row"><button class="btn ghost sm" data-act="planDiscard">Discard</button><button class="btn primary sm" data-act="planSave">${ico("check")}Save</button></div>`;
-  let h = `<div class="spread" style="margin-bottom:8px"><button class="btn ghost sm" data-act="back">Back</button>${bar}</div>
+  if(!p){ sub=null; return view==="workout" ? vWorkout() : vPlans(); }
+  const fromTpl = !!S.draft.fromTpl, saveLabel = fromTpl ? "Save as my plan" : "Save";
+  const bar = `<div class="row" style="gap:6px;flex-wrap:wrap;justify-content:flex-end"><button class="btn ghost sm" data-act="planDiscard">Discard</button><button class="btn sm" data-act="planSave">${ico("check")}${saveLabel}</button><button class="btn primary sm" data-act="planStart" ${p.items.length?"":"disabled"}>${ico("play")}Start</button></div>`;
+  let h = `<div class="spread" style="margin-bottom:8px;align-items:flex-start"><button class="btn ghost sm" data-act="back">Back</button>${bar}</div>
+    ${fromTpl ? `<p class="sub" style="margin:0 0 10px">This is a template. Start it as it is, or change it and save it as your own plan.</p>` : ""}
     <div class="stack">
     <div><label class="f" for="pname">Plan name</label><input id="pname" class="name-in" data-bind="planName" value="${esc(p.name)}" placeholder="e.g. Push day"></div>
     <div><label class="f" for="pnote">Note (optional)</label><textarea id="pnote" class="t" data-bind="planNote" placeholder="Anything you want to see before you start">${esc(p.note||"")}</textarea></div>`;
@@ -782,7 +796,7 @@ function vPlanEdit(){
       <input class="t" data-bind="item" data-i="${i}" data-f="note" value="${esc(it.note||"")}" placeholder="Note (optional), e.g. RPE 8 or an alternative" style="margin-top:8px;min-height:40px;font-size:.9rem"></div>`;
   });
   h += `<button class="btn primary wide" data-act="pick" data-v="plan">Add exercises</button>
-    <div class="row"><button class="btn ghost" style="flex:1" data-act="planDiscard">Discard</button><button class="btn primary" style="flex:1" data-act="planSave">${ico("check")}Save</button></div>
+    <div class="row" style="flex-wrap:wrap"><button class="btn ghost" style="flex:1" data-act="planDiscard">Discard</button><button class="btn" style="flex:1" data-act="planSave">${ico("check")}${saveLabel}</button><button class="btn primary" style="flex:1" data-act="planStart" ${p.items.length?"":"disabled"}>${ico("play")}Start</button></div>
     <div class="hr"></div>
     <div class="row"><button class="btn ghost sm" style="flex:1" data-act="expPlan">${ico("export")}Export this plan</button><button class="btn ghost sm" style="flex:1" data-act="dupPlan">Duplicate</button></div>
     ${S.draft.isNew ? "" : `<button class="btn danger wide" data-act="delPlan">Delete plan</button>`}</div>`;
@@ -791,20 +805,19 @@ function vPlanEdit(){
 
 /* ---------- WORKOUT ---------- */
 function vWorkout(){
-  if(sub && sub.k==="pview") return vPlanView();
+  if(sub && sub.k==="plan") return vPlanEdit();
   const A = S.active;
   if(!A){
-    const grid = S.settings.planView==="grid";
-    let h = `<h1>Workout</h1><div class="stack"><div class="empty">No workout running. Tap a plan to see its exercises, or start one.</div><button class="btn primary wide" data-act="startEmpty">Start empty workout</button></div>`;
-    if(S.plans.length) h += `<div class="spread" style="margin:22px 0 8px"><h3 style="margin:0">My plans</h3>${S.plans.length>1?`<button class="btn ghost sm" data-act="reorderOpen" data-v="plans">${ico("reorder")}Reorder</button>`:""}</div><div class="${grid?"plangrid":"stack"}">${S.plans.map(p=>planCard(p,false,grid)).join("")}</div>`;
+    let h = `<div class="spread"><h1>Workout</h1>${S.plans.length ? viewSwitch() : ""}</div><div class="stack"><div class="empty">No workout running. Tap a plan to view or edit it, or press Start.</div><button class="btn primary wide" data-act="startEmpty">Empty workout</button></div>`;
+    if(S.plans.length) h += `<h3>My plans</h3>${planList()}`;
     return h;
   }
   const paused = !!A.pausedAt;
-  let h = `<div class="wbar"><div class="spread"><div class="row" style="gap:14px;align-items:center;min-width:0"><div class="clock ${paused?"paused":""}" id="elapsed">${fmtTime(Math.max(0,elapsedMs(A)/1000))}</div><button class="tbtn" data-act="${paused?"timerResume":"timerPause"}" aria-label="${paused?"Resume timer":"Pause timer"}">${ico(paused?"play":"pause")}</button></div>
+  let h = `<div class="wbar"><div class="spread"><div class="row" style="gap:14px;align-items:center;min-width:0"><button class="clockbtn" data-act="editClock" aria-label="Edit workout time"><div class="clock ${paused?"paused":""}" id="elapsed">${fmtTime(Math.max(0,elapsedMs(A)/1000))}</div></button><button class="tbtn" data-act="${paused?"timerResume":"timerPause"}" aria-label="${paused?"Resume timer":"Pause timer"}">${ico(paused?"play":"pause")}</button></div>
       <div class="row" style="gap:8px"><button class="btn danger sm" data-act="discard">Discard</button><button class="btn primary" data-act="finish">Finish</button></div></div>
-      ${paused ? `<div class="sub" style="margin-top:6px">Timer paused. Tap play to continue.</div>` : ""}</div>
+      <div class="sub" style="margin-top:6px">${A.waiting ? "Timer not started. It starts when you tap play or tick your first set." : paused ? "Timer paused. Tap play to continue. Tap the time to change it." : "Tap the time to change it."}</div></div>
     <input class="name-in" data-bind="wName" value="${esc(A.name)}" aria-label="Workout name">
-    <label class="f" style="margin:10px 0 14px">Started at<input type="datetime-local" class="t dt" data-bind="wStart" value="${toLocalInput(A.start)}" style="margin-top:4px"></label>
+    <label class="f" style="margin:10px 0 14px">Started at<span class="dtwrap"><input type="datetime-local" class="t dt" data-bind="wStart" value="${toLocalInput(A.start)}">${ico("chev")}</span></label>
     ${A.note ? `<p class="sub" style="margin:0 0 12px">${esc(A.note)}</p>` : ""}<div class="stack">`;
   A.exercises.forEach((x, xi) => {
     if(!x.uid) x.uid = uid();
@@ -874,7 +887,7 @@ function vHistDetail(){
     return h;
   }
   h += `<div class="stack"><div><label class="f">Workout name</label><input class="name-in" data-bind="hName" value="${esc(w.name)}"></div>
-    <div class="row"><label class="f" style="flex:2">Started at<input type="datetime-local" class="t" data-bind="hStart" value="${toLocalInput(w.start)}" style="margin-top:4px"></label>
+    <div class="row"><label class="f" style="flex:2">Started at<span class="dtwrap"><input type="datetime-local" class="t dt" data-bind="hStart" value="${toLocalInput(w.start)}">${ico("chev")}</span></label>
     <label class="f" style="flex:1">Duration (min)<input class="t" inputmode="numeric" data-sel data-bind="hDur" value="${Math.round((w.end-w.start)/60000)}" style="margin-top:4px"></label></div>`;
   w.exercises.forEach((x, xi) => {
     const e = getEx(x.exId), t = e.type==="t";
@@ -1212,10 +1225,9 @@ function renderImport(){
 /* ---------- workout helpers ---------- */
 function blankSets(n){ return Array.from({length:Math.max(1,n||3)}, () => ({kg:"", reps:"", t:"", done:false})); }
 function startWorkout(plan){
-  if(sub && sub.k==="pview") sub = null;
   if(S.active){ toast("Finish or discard the current workout first."); view="workout"; sub=null; render(); return; }
   S.active = {id:uid(), planId:plan?plan.id:null, name:plan?(plan.name||"Workout"):"Workout", note:plan?plan.note||"":"", start:Date.now(), restEnd:null, restTotal:0,
-    pausedAt:null, pausedMs:0, exercises: plan ? plan.items.map(it => ({exId:it.exId, rest:num(it.rest)||null, note:it.note||"", target:{sets:it.sets, reps:it.reps, kg:it.kg}, sets:blankSets(num(it.sets) || (lastSets(it.exId)||[]).length || 3)})) : []};
+    pausedAt:plan?null:Date.now(), waiting:!plan, pausedMs:0, exercises: plan ? plan.items.map(it => ({exId:it.exId, rest:num(it.rest)||null, note:it.note||"", target:{sets:it.sets, reps:it.reps, kg:it.kg}, sets:blankSets(num(it.sets) || (lastSets(it.exId)||[]).length || 3)})) : []};
   save(); view="workout"; sub=null; render(); syncWake(); window.scrollTo(0,0);
 }
 async function finishWorkout(){
@@ -1236,12 +1248,31 @@ async function finishWorkout(){
   view="history"; sub={k:"hist", id:w.id}; render(); window.scrollTo(0,0);
   toast(pr.list.length ? `Workout saved. New record${pr.list.length>1?"s":""}: ` + pr.list.map(p=>`${exMain(getEx(p.exId))} ${setText(p.s,p.type)}`).join("; ") : "Workout saved");
 }
+function startTimerNow(A){ if(A && A.waiting){ A.start = Date.now(); A.pausedMs = 0; A.pausedAt = null; A.waiting = false; } }
+function promptText(msg, value, hint){
+  return new Promise(res => {
+    const d = document.createElement("div"); d.className = "modal";
+    d.innerHTML = `<div class="box" role="dialog" aria-modal="true"><p style="margin:0 0 10px">${esc(msg)}</p><input class="t" id="ptxt" value="${esc(value)}" inputmode="numeric" style="font-size:1.4rem;text-align:center"><p class="sub" style="margin:8px 0 14px">${esc(hint||"")}</p><div class="row" style="justify-content:flex-end"><button class="btn ghost" data-r="0">Cancel</button><button class="btn primary" data-r="1">Save</button></div></div>`;
+    d.addEventListener("click", ev => { const b = ev.target.closest("[data-r]"); if(b || ev.target===d){ ev.stopPropagation(); const v = d.querySelector("#ptxt").value; d.remove(); res(b && b.dataset.r==="1" ? v : null); } });
+    $("#layer").appendChild(d); const i = d.querySelector("#ptxt"); i.focus(); i.select();
+  });
+}
+function parseClock(v){
+  const parts = String(v||"").trim().split(/[:.,\s]+/).filter(Boolean).map(x=>parseInt(x));
+  if(!parts.length || parts.some(x=>!isFinite(x) || x<0)) return null;
+  const [h,m,sec] = parts.length>=3 ? parts.slice(-3) : parts.length===2 ? [0,parts[0],parts[1]] : [0,parts[0],0];
+  return (h*3600 + m*60 + sec) * 1000;
+}
 function startRest(sec){ const A = S.active; A.restTotal = sec; A.restEnd = Date.now() + sec*1000; save(); tick(); }
 
 /* ---------- render ---------- */
+let navLock = false, lastNavKey = "";
+const navKey = () => JSON.stringify({view, sub: sub ? {k:sub.k, id:sub.id, edit:!!sub.edit} : null});
+const navState = () => ({view, sub: sub ? clone(sub) : null});
 function render(){
   const v = {plans:vPlans, workout:vWorkout, progress:vProgress, history:vHistory, settings:vSettings}[view];
   $("#main").innerHTML = v();
+  if(!navLock){ const k = navKey(); if(k!==lastNavKey){ lastNavKey = k; try{ history.pushState(navState(), ""); }catch(e){} } }
   document.querySelectorAll("#tabs button").forEach(b => {
     b.removeAttribute("aria-current");
     if(b.dataset.tab===view) b.setAttribute("aria-current","page");
@@ -1276,7 +1307,7 @@ document.addEventListener("click", async ev => {
   if(b.dataset.tab){
     const to = b.dataset.tab;
     if(to===view && sub && sub.k==="plan") return;
-    if(view==="plans" && sub && sub.k==="plan"){
+    if(sub && sub.k==="plan"){
       if(isDirty()){
         const r = await askChoice(`You have unsaved changes in "${draftName()}".`, [{v:"save",label:"Save",kind:"primary"},{v:"discard",label:"Discard changes",kind:"danger"},{v:"keep",label:"Keep for later",kind:"ghost"}]);
         if(!r) return;
@@ -1297,7 +1328,7 @@ document.addEventListener("click", async ev => {
       if(sub && sub.k==="plan"){ if(await leaveDraft()){ sub=null; render(); window.scrollTo(0,0); } break; }
       if(sub && sub.k==="hist" && sub.edit) closeHistEdit(); sub = sub && sub.from ? sub.from : null; if(sub && sub.k==="ex") view="progress"; render(); window.scrollTo(0,0); break;
     case "newPlan": { if(!await leaveDraft()) break; openDraft({id:uid(), name:"", note:"", items:[]}, true); render(); window.scrollTo(0,0); setTimeout(()=>$("#pname")&&$("#pname").focus(),30); break; }
-    case "editPlan": { const id=b.dataset.id; if(S.draft && S.draft.id!==id && !await leaveDraft()) break; view="plans"; if(S.draft && S.draft.id===id) sub={k:"plan", id}; else openDraft(S.plans.find(p=>p.id===id), false); render(); window.scrollTo(0,0); break; }
+    case "editPlan": { const id=b.dataset.id; if(S.draft && S.draft.id!==id && !await leaveDraft()) break; if(S.draft && S.draft.id===id) sub={k:"plan", id}; else openDraft(S.plans.find(p=>p.id===id), false); render(); window.scrollTo(0,0); break; }
     case "draftOpen": sub={k:"plan", id:S.draft.id}; render(); window.scrollTo(0,0); break;
     case "draftDiscard": if(await ask(`Discard the unsaved changes in "${draftName()}"?`, "Discard", true)){ S.draft=null; save(); render(); } break;
     case "planSave": commitDraft(); sub=null; render(); window.scrollTo(0,0); toast("Plan saved"); break;
@@ -1340,7 +1371,7 @@ document.addEventListener("click", async ev => {
       const x=A.exercises[+b.dataset.x], si=+b.dataset.s, s=x.sets[si];
       if(!s.done){
         if(!fillSet(x, si)){ toast(getEx(x.exId).type==="t" ? "Enter a time first" : "Enter reps first"); render(); break; }
-        s.done=true; save(); render();
+        startTimerNow(A); s.done=true; save(); render();
         if(!A.exercises.every(e=>e.sets.every(z=>z.done))) startRest(x.rest || S.settings.rest);
       } else { s.done=false; save(); render(); }
       break;
@@ -1348,7 +1379,7 @@ document.addEventListener("click", async ev => {
     case "doneAll": {
       const x=A.exercises[+b.dataset.x];
       if(x.sets.every(z=>z.done)){ x.sets.forEach(z=>z.done=false); save(); render(); break; }
-      let skipped=0; x.sets.forEach((z,si)=>{ if(z.done) return; if(fillSet(x,si)) z.done=true; else skipped++; });
+      let skipped=0; x.sets.forEach((z,si)=>{ if(z.done) return; if(fillSet(x,si)){ z.done=true; startTimerNow(A); } else skipped++; });
       save(); render();
       if(skipped) toast(`${skipped} set${skipped>1?"s have":" has"} no reps or time yet, so ${skipped>1?"they stay":"it stays"} open`);
       else if(!A.exercises.every(e=>e.sets.every(z=>z.done))) startRest(x.rest || S.settings.rest);
@@ -1362,8 +1393,30 @@ document.addEventListener("click", async ev => {
       apply(S.plans.find(p=>p.id===A.planId)); if(S.draft && S.draft.id===A.planId) apply(S.draft.data);
       save(); toast("Plan updated"); break;
     }
-    case "viewPlan": sub={k:"pview", id:b.dataset.id, tpl:false}; render(); window.scrollTo(0,0); break;
-    case "viewTpl": sub={k:"pview", id:b.dataset.id, tpl:true}; render(); window.scrollTo(0,0); break;
+    case "viewPlan": { const id=b.dataset.id; if(S.draft && S.draft.id!==id && !await leaveDraft()) break; if(S.draft && S.draft.id===id) sub={k:"plan", id}; else openDraft(S.plans.find(p=>p.id===id), false); render(); window.scrollTo(0,0); break; }
+    case "viewTpl": { if(S.draft && !await leaveDraft()) break; const t=TEMPLATES.find(x=>x.id===b.dataset.id); openDraft({id:uid(), name:t.name, note:t.note, items:tplToItems(t)}, true, t.id); render(); window.scrollTo(0,0); break; }
+    case "planMove": case "tplMove": { const i=+b.dataset.i, j=i+(+b.dataset.d); if(a==="planMove"){ const E=S.plans; if(j<0||j>=E.length) break; [E[i],E[j]]=[E[j],E[i]]; } else { const ids=orderedTpl().map(t=>t.id); if(j<0||j>=ids.length) break; [ids[i],ids[j]]=[ids[j],ids[i]]; S.settings.tplOrder=ids; } save(); render(); break; }
+    case "planStart": {
+      const D=S.draft; if(!D) break; let p=clone(D.data);
+      if(!p.items.length){ toast("Add exercises first"); break; }
+      if(S.active){ toast("Finish or discard the current workout first."); break; }
+      if(isDirty()){
+        const r=await askChoice("Save your changes to this plan before starting?", [{v:"save",label:D.fromTpl?"Save as my plan and start":"Save and start",kind:"primary"},{v:"once",label:"Start without saving",kind:"ghost"},{v:"",label:"Cancel",kind:"ghost"}]);
+        if(!r) break;
+        if(r==="save") commitDraft(); else { S.draft=null; save(); }
+        if(r==="once" && D.fromTpl) p.id=D.fromTpl;
+      } else { S.draft=null; save(); if(D.fromTpl) p.id=D.fromTpl; }
+      sub=null; startWorkout(p); break;
+    }
+    case "editClock": {
+      if(!A) break;
+      const v = await promptText("Workout time so far", fmtTime(Math.max(0,elapsedMs(A)/1000)), "Type minutes:seconds or hours:minutes:seconds, e.g. 45:00 or 1:05:30.");
+      if(v==null) break;
+      const ms = parseClock(v); if(ms==null){ toast("That time was not clear. Try e.g. 45:00"); break; }
+      if(A.waiting){ A.waiting=false; A.pausedAt=Date.now(); }
+      const ref = A.pausedAt || Date.now(); A.start = ref - (A.pausedMs||0) - ms;
+      save(); render(); toast("Time updated"); break;
+    }
     case "addSet": { const x=A.exercises[+b.dataset.x], l=x.sets[x.sets.length-1]; x.sets.push({kg:l?l.kg:"", reps:l?l.reps:"", t:l?l.t:"", done:false}); save(); render(); break; }
     case "delSet": A.exercises[+b.dataset.x].sets.pop(); save(); render(); break;
     case "wxUp": case "wxDown": { const i=+b.dataset.x, j=a==="wxUp"?i-1:i+1; [A.exercises[i],A.exercises[j]]=[A.exercises[j],A.exercises[i]]; save(); render(); break; }
@@ -1372,7 +1425,7 @@ document.addEventListener("click", async ev => {
     case "roUp": case "roDown": { const i=+b.dataset.i, j=a==="roUp"?i-1:i+1; moveItem(i,j); renderReorder(); break; }
     case "roShuffle": { const E=A.exercises; for(let i=E.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [E[i],E[j]]=[E[j],E[i]]; } save(); renderReorder(); break; }
     case "timerPause": if(A && !A.pausedAt){ A.pausedAt=Date.now(); save(); render(); } break;
-    case "timerResume": if(A && A.pausedAt){ A.pausedMs=(A.pausedMs||0)+(Date.now()-A.pausedAt); A.pausedAt=null; save(); render(); } break;
+    case "timerResume": if(A && A.waiting){ startTimerNow(A); save(); render(); break; } if(A && A.pausedAt){ A.pausedMs=(A.pausedMs||0)+(Date.now()-A.pausedAt); A.pausedAt=null; save(); render(); } break;
     case "wxDel": if(await ask(`Remove ${exMain(getEx(A.exercises[+b.dataset.x].exId))} from this workout?`, "Remove", true)){ A.exercises.splice(+b.dataset.x,1); save(); render(); } break;
     case "finish": finishWorkout(); break;
     case "discard": if(await ask("Discard this workout? Nothing from it will be saved.", "Discard", true)){ S.active=null; save(); syncWake(); render(); } break;
@@ -1507,7 +1560,24 @@ async function exportData(){
 
 document.documentElement.lang = S.settings.lang;
 applyAppearance();
-render(); syncWake();
+navLock = true; render(); navLock = false; lastNavKey = navKey();
+try{ history.replaceState(navState(), ""); }catch(e){}
+window.addEventListener("popstate", async ev => {
+  const here = navState();
+  const m = document.querySelector("#layer .modal");
+  if(m){ m.dispatchEvent(new MouseEvent("click", {bubbles:true})); try{ history.pushState(here, ""); }catch(e){} return; }
+  if(picker || reorderKind || importer){ picker = null; reorderKind = null; importer = null; $("#layer").innerHTML = ""; render(); try{ history.pushState(here, ""); }catch(e){} return; }
+  const st = ev.state; if(!st || !st.view) return;
+  const toSub = st.sub;
+  if(sub && sub.k==="plan" && !(toSub && toSub.k==="plan" && toSub.id===sub.id)){
+    if(!await leaveDraft()){ try{ history.pushState(here, ""); }catch(e){} return; }
+  }
+  if(sub && sub.k==="hist" && sub.edit) closeHistEdit();
+  view = st.view; sub = toSub;
+  if(sub && sub.k==="plan" && !(S.draft && S.draft.id===sub.id)) sub = null;
+  navLock = true; render(); navLock = false; lastNavKey = navKey(); window.scrollTo(0,0);
+});
+syncWake();
 if("serviceWorker" in navigator && window.isSecureContext){ navigator.serviceWorker.register("sw.js").catch(()=>{}); }
 </script>
 </body>

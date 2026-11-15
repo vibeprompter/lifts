@@ -96,8 +96,8 @@ tr.done .chk{background:var(--accent);border-color:var(--accent);color:var(--acc
 .ex-f{display:flex;gap:8px;padding:8px 12px 12px}
 .rest{position:fixed;left:0;right:0;bottom:calc(64px + env(safe-area-inset-bottom,0px));z-index:20;background:var(--accent);color:var(--accent-ink);padding:10px 16px;display:flex;align-items:center;gap:10px;overflow:hidden}
 .rest .bar{position:absolute;left:0;top:0;bottom:0;background:rgba(255,255,255,.18);pointer-events:none}
-.rest .time{font-family:var(--cond);font-weight:700;font-size:2rem;font-variant-numeric:tabular-nums;position:relative;flex:1}
-.rest button{position:relative;background:rgba(255,255,255,.2);border:0;color:inherit;border-radius:var(--r-sm);min-height:40px;padding:0 12px;font-weight:600}
+.rest .time{font-family:var(--cond);font-weight:700;font-size:clamp(1.3rem,7vw,2rem);font-variant-numeric:tabular-nums;position:relative;flex:1;min-width:0;white-space:nowrap;overflow:hidden}
+.rest button{flex:none;white-space:nowrap;position:relative;background:rgba(255,255,255,.2);border:0;color:inherit;border-radius:var(--r-sm);min-height:40px;padding:0 12px;font-weight:600}
 .badge{display:inline-block;background:var(--success);color:#fff;font-size:.68rem;font-weight:700;border-radius:6px;padding:1px 6px;margin-left:6px;vertical-align:middle;letter-spacing:.03em}
 /* history */
 .hist{display:block;width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
@@ -143,7 +143,7 @@ nav.tabs .live::after{content:"";position:absolute;top:14px;right:calc(50% - 34p
 .grp{font-family:var(--cond);font-weight:600;color:var(--muted);margin:16px 0 2px;font-size:1.05rem}
 .modal{position:fixed;inset:0;z-index:60;background:rgba(10,14,20,.5);display:grid;place-items:center;padding:20px}
 .modal .box{background:var(--surface);border-radius:var(--r-lg);padding:18px;max-width:420px;width:100%}
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:70;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:var(--r-sm);font-size:.95rem;max-width:90vw}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:100;pointer-events:none;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:var(--r-sm);font-size:.95rem;max-width:90vw}
 .seg{display:flex;flex-wrap:wrap;border:1px solid var(--line);border-radius:var(--r-sm);overflow:hidden}
 .seg button{flex:1 1 auto;border:0;background:transparent;padding:9px 8px;min-height:42px;font-weight:600;color:var(--muted);font-size:.9rem}
 .seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
@@ -179,10 +179,48 @@ input[type=checkbox]{accent-color:var(--accent)}
 .newtag{display:inline-block;font-size:.68rem;font-weight:700;border:1px solid var(--accent);color:var(--accent);border-radius:6px;padding:0 5px;margin-left:6px}
 @font-face{font-family:"OpenDyslexic";src:url("fonts/OpenDyslexic-Regular.woff2") format("woff2");font-weight:400 500;font-display:swap}
 @font-face{font-family:"OpenDyslexic";src:url("fonts/OpenDyslexic-Bold.woff2") format("woff2");font-weight:600 800;font-display:swap}
-.wbar{position:sticky;top:0;z-index:15;background:var(--bg);margin:-16px -16px 12px;padding:12px 16px 10px;border-bottom:1px solid var(--line)}
-.wbar .spread{flex-wrap:wrap;row-gap:8px}
-.tbtn{flex:none;width:50px;height:50px;border-radius:var(--r);border:1px solid var(--line);background:var(--surface);color:var(--accent);display:grid;place-items:center}
-.tbtn .ic{width:24px;height:24px}
+.wbar{position:fixed;left:0;right:0;top:0;z-index:25;background:var(--bg);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px);transform:translateZ(0)}
+.wbar-in{max-width:640px;margin:0 auto;padding:10px 16px 8px}
+.wrow{display:grid;grid-template-columns:minmax(0,1fr) auto auto auto;gap:8px;align-items:center}
+.wrow .clockbtn{min-width:0;overflow:hidden}
+.wbar .clock{display:block;font-size:clamp(2rem,10vw,3rem);overflow:hidden}
+.whint{display:flex;align-items:baseline;gap:8px;margin-top:4px}
+.whint .sub{flex:1;min-width:0;font-size:.85rem}
+.whint .linkbtn{flex:none;white-space:nowrap}
+.wspace{height:var(--wspace,84px)}
+.fin{min-height:44px;padding:0 12px;white-space:nowrap}
+.tbtn{flex:none;width:44px;height:44px;border-radius:var(--r);border:1px solid var(--line);background:var(--surface);color:var(--accent);display:grid;place-items:center;padding:0}
+.tbtn.dang{color:var(--danger)}
+.tbtn .ic{width:22px;height:22px}
+.icon .ic.arr,.ic.arr{width:26px;height:26px;stroke-width:2.75}
+/* running workout mini controller */
+body.has-mini .wrap{padding-top:64px}
+.mini-bar{position:fixed;left:0;right:0;top:0;z-index:26;display:flex;align-items:center;gap:10px;border:0;border-bottom:1px solid var(--line);background:var(--accent-soft);color:var(--ink);padding:calc(env(safe-area-inset-top,0px) + 8px) 16px 8px;min-height:48px;font-weight:600;text-align:left;width:100%}
+.mini-bar .dot{flex:none;width:10px;height:10px;border-radius:50%;background:var(--success)}
+.mini-bar .dot.off{background:var(--muted)}
+.mini-t{font-family:var(--cond);font-size:1.25rem;font-variant-numeric:tabular-nums;flex:none}
+.mini-what{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.9rem}
+.mini-bar .ic{flex:none}
+.mini-scrim{position:fixed;inset:0;z-index:27;background:rgba(10,14,20,.35)}
+.mini-card{position:fixed;left:0;right:0;z-index:28;top:var(--mini-top,48px);max-width:640px;margin:0 auto;background:var(--surface);border-bottom:1px solid var(--line);border-radius:0 0 var(--r-lg) var(--r-lg);padding:12px 16px 14px;box-shadow:0 10px 30px rgba(0,0,0,.25);max-height:calc(100vh - var(--mini-top,48px) - 80px);overflow-y:auto}
+.mini-clock{font-family:var(--cond);font-weight:700;font-size:2.2rem;line-height:1;font-variant-numeric:tabular-nums}
+.mini-clock.paused{opacity:.45}
+.mini-now{margin-top:10px;padding:10px 12px;border:1px solid var(--line);border-radius:var(--r)}
+.mini-now .btn{margin-top:10px}
+.mini-next{margin-top:8px;font-size:.92rem}
+.mini-rest{margin-top:8px;font-weight:600;color:var(--accent);font-variant-numeric:tabular-nums}
+.mini-ctl{display:grid;grid-template-columns:repeat(auto-fit,minmax(64px,1fr));gap:6px;margin-top:12px}
+.mini-ctl .btn{flex-direction:column;gap:2px;padding:8px 4px;font-size:.78rem;min-height:56px}
+/* developer mode: picker */
+.dev-tab{position:fixed;left:0;top:38%;z-index:92;border:0;border-radius:0 var(--r-sm) var(--r-sm) 0;background:var(--ink);color:var(--bg);opacity:.75;padding:8px 3px;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:.62rem;font-weight:700;letter-spacing:.04em}
+.dev-tab.on{background:var(--danger);color:#fff;opacity:1}
+.dev-tab .ic{width:16px;height:16px}
+.dev-ov{position:fixed;inset:0;z-index:90;cursor:crosshair;touch-action:pan-y;background:repeating-linear-gradient(45deg,transparent 0 14px,rgba(229,72,77,.05) 14px 28px)}
+.dev-hl{position:fixed;z-index:91;pointer-events:none;outline:3px solid var(--danger);outline-offset:1px;background:rgba(229,72,77,.12);border-radius:3px}
+.dev-bar{position:fixed;left:8px;right:8px;bottom:calc(72px + env(safe-area-inset-bottom,0px));z-index:93;background:var(--surface);color:var(--ink);border:2px solid var(--danger);border-radius:var(--r);padding:10px;display:flex;flex-direction:column;gap:8px;max-width:620px;margin:0 auto;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.dev-bar.top{bottom:auto;top:calc(env(safe-area-inset-top,0px) + 8px)}
+.dev-what b{display:block;overflow-wrap:anywhere}
+.dev-what small{display:block;color:var(--muted);font-size:.75rem;overflow-wrap:anywhere}
 .dtwrap{position:relative;display:block;margin-top:4px}
 .dtwrap .ic{position:absolute;right:14px;top:50%;transform:translateY(-50%);width:22px;height:22px;pointer-events:none;color:var(--ink);opacity:.75}
 input.dt{-webkit-appearance:none;appearance:none;display:block;width:100%;min-height:46px;padding-right:48px;text-align:left;position:relative}
@@ -190,7 +228,7 @@ input.dt::-webkit-calendar-picker-indicator{position:absolute;right:0;top:0;widt
 input.dt::-webkit-inner-spin-button,input.dt::-webkit-clear-button{display:none}
 .clockbtn{background:none;border:0;padding:0;color:inherit;text-align:left}
 .parrows{display:flex;gap:0;flex:none}
-.parrows .icon{min-width:36px;min-height:36px}
+.parrows .icon{min-width:44px;min-height:44px}
 .plan.mini .parrows{justify-content:flex-end;margin:-4px -6px 0 0}
 .linkbtn{background:none;border:0;color:var(--accent);font-weight:600;padding:4px 2px;font-size:.85rem;min-height:32px}
 .exnote{display:block;border-left:3px solid var(--accent);padding-left:8px;color:var(--ink);margin:2px 0}
@@ -213,6 +251,9 @@ input.dt::-webkit-inner-spin-button,input.dt::-webkit-clear-button{display:none}
   <button data-tab="settings">Settings</button>
 </nav>
 <div id="layer"></div>
+<div id="mini"></div>
+<div id="report"></div>
+<div id="devui"></div>
 
 <script>
 "use strict";
@@ -401,12 +442,24 @@ const ICONS = {
   shuffle:'<path d="M16 3h5v5"/><path d="M4 20L21 3"/><path d="M21 16v5h-5"/><path d="M15 15l6 6"/><path d="M4 4l5 5"/>',
   reorder:'<path d="M8 20V4M4 8l4-4 4 4"/><path d="M16 4v16M12 16l4 4 4-4"/>',
   check:'<path d="M5 12l5 5L20 7"/>',
-  chev:'<path d="M6 9l6 6 6-6"/>'
+  chev:'<path d="M6 9l6 6 6-6"/>',
+  chevup:'<path d="M6 15l6-6 6 6"/>',
+  up:'<path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>',
+  down:'<path d="M12 5v14"/><path d="M5 12l7 7 7-7"/>',
+  left:'<path d="M19 12H5"/><path d="M12 5l-7 7 7 7"/>',
+  right:'<path d="M5 12h14"/><path d="M12 5l7 7-7 7"/>',
+  trash:'<path d="M4 7h16"/><path d="M9 7V4h6v3"/><path d="M6 7l1 13h10l1-13"/>',
+  reset:'<path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4v5h5"/>',
+  x:'<path d="M6 6l12 12M18 6L6 18"/>',
+  open:'<path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M18 14v5H5V6h5"/>',
+  bug:'<rect x="7" y="7" width="10" height="13" rx="5"/><path d="M12 11v9"/><path d="M4 13h3M17 13h3M5 8l2.5 2M19 8l-2.5 2M5 19l2.5-2M19 19l-2.5-2M9 7a3 3 0 0 1 6 0"/>'
 };
+// Arrow icons get their own class so they can be drawn larger and bolder than other icons
+const arr = n => ico(n).replace('class="ic"', 'class="ic arr"');
 const ico = n => `<svg class="ic" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICONS[n]}</svg>`;
 
 /* ---------- appearance ---------- */
-const APP_VERSION = "6";
+const APP_VERSION = "7";
 const T = (bg,surface,surface2,ink,muted,line,accent,accentInk,accentSoft,danger,success) => ({bg,surface,surface2,ink,muted,line,accent,"accent-ink":accentInk,"accent-soft":accentSoft,danger,success});
 const THEMES = {
   light:   {g:"basic", name:"Blue light", dark:false, v:T("#F2F4F8","#FFFFFF","#E8ECF3","#1A1F2B","#687085","#DDE2EA","#2F6BFF","#FFFFFF","#E5EDFF","#E5484D","#16A271")},
@@ -492,7 +545,7 @@ darkMQ.addEventListener && darkMQ.addEventListener("change", () => { if(S.settin
 
 /* ---------- storage ---------- */
 const KEY = "lifts.v1";
-const defaults = () => ({v:2, plans:[], custom:[], history:[], active:null, settings:{lang:"en", alt:"pl", rest:90, sound:true, wake:true, templates:true, planView:"list", tplOrder:[], ap:apDefaults()}, draft:null, exNotes:{}});
+const defaults = () => ({v:2, plans:[], custom:[], history:[], active:null, settings:{lang:"en", alt:"pl", rest:90, sound:true, wake:true, templates:true, planView:"list", tplOrder:[], notif:false, reportEmail:"", reportRepo:"", ap:apDefaults()}, draft:null, exNotes:{}, reports:[]});
 function hydrate(d){
   const base = defaults(), s = Object.assign(base.settings, d.settings||{});
   if(!d.settings || d.settings.alt===undefined) s.alt = s.lang==="en" ? "pl" : "en";
@@ -509,7 +562,11 @@ let S = load();
 function save(){
   try{ localStorage.setItem(KEY, JSON.stringify(S)); }
   catch(e){ toast("Could not save on this device. Export a backup in Settings."); }
+  queueLive();
 }
+// Phone notification follows every saved change, but batched so typing does not spam updates
+let liveT = null;
+function queueLive(){ clearTimeout(liveT); liveT = setTimeout(() => { try{ syncNotif(); }catch(e){} }, 300); }
 
 /* ---------- plan drafts (unsaved edits) ---------- */
 const clone = o => JSON.parse(JSON.stringify(o));
@@ -728,7 +785,7 @@ function planCard(p, tpl, mini, idx, total){
   const last = [...S.history].reverse().find(w => w.planId===p.id);
   const open = `data-act="${tpl?"viewTpl":"viewPlan"}" data-id="${p.id}" role="button" tabindex="0"`;
   const mv = tpl ? "tplMove" : "planMove";
-  const arrows = total>1 ? `<div class="parrows"><button class="icon" aria-label="Move earlier" data-act="${mv}" data-i="${idx}" data-d="-1" ${idx?"":"disabled"}>${mini?"←":"↑"}</button><button class="icon" aria-label="Move later" data-act="${mv}" data-i="${idx}" data-d="1" ${idx<total-1?"":"disabled"}>${mini?"→":"↓"}</button></div>` : "";
+  const arrows = total>1 ? `<div class="parrows"><button class="icon" aria-label="Move earlier" data-act="${mv}" data-i="${idx}" data-d="-1" ${idx?"":"disabled"}>${arr(mini?"left":"up")}</button><button class="icon" aria-label="Move later" data-act="${mv}" data-i="${idx}" data-d="1" ${idx<total-1?"":"disabled"}>${arr(mini?"right":"down")}</button></div>` : "";
   const startBtn = tpl
     ? `<button class="btn primary sm" ${mini?'style="flex:1"':""} data-act="startTpl" data-id="${p.id}">Start</button>`
     : `<button class="btn primary sm" ${mini?'style="flex:1"':""} data-act="startPlan" data-id="${p.id}" ${p.items.length?"":"disabled"}>Start</button>`;
@@ -786,7 +843,7 @@ function vPlanEdit(){
   p.items.forEach((it, i) => {
     const e = getEx(it.exId), t = e.type==="t";
     h += `<div class="item"><div class="spread" style="align-items:flex-start">${exLabel(e)}
-      <div class="row" style="gap:0"><button class="icon" aria-label="Move up" data-act="itemUp" data-i="${i}" ${i?"":"disabled"}>↑</button><button class="icon" aria-label="Move down" data-act="itemDown" data-i="${i}" ${i<p.items.length-1?"":"disabled"}>↓</button><button class="icon" aria-label="Remove" data-act="itemDel" data-i="${i}">✕</button></div></div>
+      <div class="row" style="gap:0"><button class="icon" aria-label="Move up" data-act="itemUp" data-i="${i}" ${i?"":"disabled"}>${arr("up")}</button><button class="icon" aria-label="Move down" data-act="itemDown" data-i="${i}" ${i<p.items.length-1?"":"disabled"}>${arr("down")}</button><button class="icon" aria-label="Remove" data-act="itemDel" data-i="${i}">✕</button></div></div>
       ${exNoteLine(it.exId)}<div class="grid">
         <label class="f">Sets<input inputmode="numeric" data-sel data-bind="item" data-i="${i}" data-f="sets" value="${esc(it.sets)}"></label>
         <label class="f">${t?"Time":"Reps"}<input data-sel data-bind="item" data-i="${i}" data-f="reps" value="${esc(it.reps)}" placeholder="${t?"1:00":"8–12"}"></label>
@@ -813,9 +870,16 @@ function vWorkout(){
     return h;
   }
   const paused = !!A.pausedAt;
-  let h = `<div class="wbar"><div class="spread"><div class="row" style="gap:14px;align-items:center;min-width:0"><button class="clockbtn" data-act="editClock" aria-label="Edit workout time"><div class="clock ${paused?"paused":""}" id="elapsed">${fmtTime(Math.max(0,elapsedMs(A)/1000))}</div></button><button class="tbtn" data-act="${paused?"timerResume":"timerPause"}" aria-label="${paused?"Resume timer":"Pause timer"}">${ico(paused?"play":"pause")}</button></div>
-      <div class="row" style="gap:8px"><button class="btn danger sm" data-act="discard">Discard</button><button class="btn primary" data-act="finish">Finish</button></div></div>
-      <div class="sub" style="margin-top:6px">${A.waiting ? "Timer not started. It starts when you tap play or tick your first set." : paused ? "Timer paused. Tap play to continue. Tap the time to change it." : "Tap the time to change it."}</div></div>
+  const nx = liveInfo(A).cur, nxs = nx ? setPreview(A, nx) : null;
+  const hint = A.waiting ? "Timer not started. It starts when you tap play or tick your first set." : paused ? "Timer paused. Tap play to continue. Tap the time to change it." : nxs ? `Next: ${nxs.name}, set ${nxs.setNo} of ${nxs.of}` : "All sets done. Tap Finish to save.";
+  // Fixed bar (not sticky) so it never lags or detaches while scrolling; .wspace reserves its height
+  let h = `<div class="wbar" id="wbar"><div class="wbar-in"><div class="wrow">
+      <button class="clockbtn" data-act="editClock" aria-label="Edit workout time"><div class="clock ${paused?"paused":""}" id="elapsed" data-clock>${fmtTime(Math.max(0,elapsedMs(A)/1000))}</div></button>
+      <button class="tbtn" data-act="${paused?"timerResume":"timerPause"}" aria-label="${paused?"Resume timer":"Pause timer"}">${ico(paused?"play":"pause")}</button>
+      <button class="tbtn dang" data-act="discard" aria-label="Discard workout">${ico("trash")}</button>
+      <button class="btn primary fin" data-act="finish">${ico("check")}Finish</button></div>
+      <div class="whint"><span class="sub">${esc(hint)}</span><button class="linkbtn" data-act="miniToggle">Quick controls</button></div></div></div>
+    <div class="wspace" id="wspace"></div>
     <input class="name-in" data-bind="wName" value="${esc(A.name)}" aria-label="Workout name">
     <label class="f" style="margin:10px 0 14px">Started at<span class="dtwrap"><input type="datetime-local" class="t dt" data-bind="wStart" value="${toLocalInput(A.start)}">${ico("chev")}</span></label>
     ${A.note ? `<p class="sub" style="margin:0 0 12px">${esc(A.note)}</p>` : ""}<div class="stack">`;
@@ -825,7 +889,7 @@ function vWorkout(){
     const allDone = x.sets.length && x.sets.every(z=>z.done), tOpen = openTgt.has(x.uid), nOpen = openNote.has(x.uid), enote = (S.exNotes||{})[x.exId] || "";
     let tline = "";
     if(tg && (tg.sets || tg.reps || (tg.kg!=="" && tg.kg!=null))){ const bits = [`${tg.sets||x.sets.length} × ${tg.reps||"?"}`]; if(tg.kg!=="" && tg.kg!=null && !t) bits.push(`${tg.kg} kg`); bits.push(`rest ${x.rest||S.settings.rest} s`); tline = `Target: ${bits.join(", ")}`; }
-    h += `<section class="ex"><div class="ex-h">${exLabel(e)}<div class="row" style="gap:0;align-items:flex-start"><button class="icon" aria-label="Move up" data-act="wxUp" data-x="${xi}" ${xi?"":"disabled"}>↑</button><button class="icon" aria-label="Move down" data-act="wxDown" data-x="${xi}" ${xi<A.exercises.length-1?"":"disabled"}>↓</button><button class="icon" aria-label="Remove exercise" data-act="wxDel" data-x="${xi}">✕</button></div></div>
+    h += `<section class="ex"><div class="ex-h">${exLabel(e)}<div class="row" style="gap:0;align-items:flex-start"><button class="icon" aria-label="Move up" data-act="wxUp" data-x="${xi}" ${xi?"":"disabled"}>${arr("up")}</button><button class="icon" aria-label="Move down" data-act="wxDown" data-x="${xi}" ${xi<A.exercises.length-1?"":"disabled"}>${arr("down")}</button><button class="icon" aria-label="Remove exercise" data-act="wxDel" data-x="${xi}">✕</button></div></div>
       <div class="target">${tline ? esc(tline) : "No target set."} <button class="linkbtn" data-act="tgtToggle" data-x="${xi}">${tOpen ? "Close" : (tline ? "Edit target" : "Add target")}</button></div>`;
     if(tOpen){
       const T0 = tg || {};
@@ -1011,6 +1075,8 @@ function vSettings(){
       <label class="spread"><span>Beep and vibrate when rest ends</span><input type="checkbox" data-bind="sound" ${st.sound?"checked":""} style="width:22px;height:22px"></label>
       <label class="spread"><span>Keep screen on during a workout</span><input type="checkbox" data-bind="wake" ${st.wake?"checked":""} style="width:22px;height:22px"></label>
       <label class="spread"><span>Show templates on the Plans screen</span><input type="checkbox" data-bind="templates" ${st.templates?"checked":""} style="width:22px;height:22px"></label>
+      <label class="spread"><span>Show the running workout in the phone's notifications</span><input type="checkbox" data-bind="notif" ${st.notif?"checked":""} style="width:22px;height:22px"></label>
+      <p class="sub" style="margin:-4px 0 0">Pull down the phone's notification bar to tick the next set or pause, without opening the app. Android allows two buttons there; reset and finish are in the app.</p>
     </div>
     ${vAppearance()}
     <div class="panel stack"><h2>Backup</h2><p class="sub" style="margin:0">Your data lives only in this browser. Clearing Chrome's site data removes it, so export a backup now and then.</p>
@@ -1018,7 +1084,9 @@ function vSettings(){
       <input type="file" id="importFile" accept=".json,application/json,text/plain" hidden>
       <div id="backupBox"></div></div>
     <div class="panel stack"><h2>Plans as a spreadsheet (CSV)</h2><p class="sub" style="margin:0">Share plans or edit them in Excel or Google Sheets. Import adds plans and never replaces your existing ones.</p>
-      <div class="row"><button class="btn primary" style="flex:1" data-act="expPlans" ${S.plans.length?"":"disabled"}>${ico("export")}Export plans</button><button class="btn ghost" style="flex:1" data-act="impPlans">${ico("import")}Import plans</button></div></div>`;
+      <div class="row"><button class="btn primary" style="flex:1" data-act="expPlans" ${S.plans.length?"":"disabled"}>${ico("export")}Export plans</button><button class="btn ghost" style="flex:1" data-act="impPlans">${ico("import")}Import plans</button></div>
+      <button class="btn ghost sm" data-act="csvTemplate">${ico("export")}Download a blank template</button></div>
+    ${vFeedback()}`;
   if(S.custom.length){
     h += `<div class="panel stack"><h2>Your own exercises</h2>`;
     S.custom.forEach(c => h += `<div class="spread">${exLabel(c)}<button class="icon" aria-label="Delete ${esc(c.en)}" data-act="delCustom" data-id="${c.id}">✕</button></div>`);
@@ -1082,7 +1150,7 @@ function renderPicker(keepInput){
   const row = e => `<button class="pick" data-act="pickToggle" data-id="${e.id}" aria-pressed="${picker.sel.includes(e.id)}">${exLabel(e)}<span class="mark">${picker.sel.includes(e.id) ? picker.sel.indexOf(e.id)+1 : ""}</span></button>`;
   let h = "";
   if(picker.sel.length){
-    h += `<div class="grp">Selected, in this order</div>` + picker.sel.map((id,i) => `<div class="selrow"><span class="mark on">${i+1}</span>${exLabel(getEx(id))}<div class="row" style="gap:0"><button class="icon" aria-label="Move up" data-act="pickSelUp" data-i="${i}" ${i?"":"disabled"}>↑</button><button class="icon" aria-label="Move down" data-act="pickSelDown" data-i="${i}" ${i<picker.sel.length-1?"":"disabled"}>↓</button><button class="icon" aria-label="Remove" data-act="pickToggle" data-id="${id}">✕</button></div></div>`).join("");
+    h += `<div class="grp">Selected, in this order</div>` + picker.sel.map((id,i) => `<div class="selrow"><span class="mark on">${i+1}</span>${exLabel(getEx(id))}<div class="row" style="gap:0"><button class="icon" aria-label="Move up" data-act="pickSelUp" data-i="${i}" ${i?"":"disabled"}>${arr("up")}</button><button class="icon" aria-label="Move down" data-act="pickSelDown" data-i="${i}" ${i<picker.sel.length-1?"":"disabled"}>${arr("down")}</button><button class="icon" aria-label="Remove" data-act="pickToggle" data-id="${id}">✕</button></div></div>`).join("");
     if(list.length) h += `<div class="grp">${toks.length || picker.cat!=="all" ? "Results" : "All exercises"}</div>`;
   }
   if(!toks.length && picker.cat==="all"){
@@ -1099,6 +1167,228 @@ function renderPicker(keepInput){
   $("#padd").textContent = n ? `Add ${n} exercise${n>1?"s":""}` : "Select exercises";
   $("#padd").disabled = !n;
   if(!keepInput) setTimeout(()=> $("#pq") && $("#pq").focus(), 50);
+}
+
+/* ---------- feedback panel in Settings ---------- */
+function vFeedback(){
+  const st = S.settings, reps = S.reports || [];
+  const kindL = {bug:"Bug", idea:"Idea", other:"Feedback"};
+  let h = `<div class="panel stack"><h2>Feedback</h2><p class="sub" style="margin:0">Report a bug or share an idea. Reports stay on this phone until you share them.${st.ap.dev ? " In developer mode, tap DEV on the left edge to point at the exact part of the screen first." : ""}</p>
+    <button class="btn primary wide" data-act="feedback">${ico("bug")}Send feedback or report a bug</button>
+    <label class="f">Email for reports (optional)<input class="t" type="email" data-bind="repEmail" value="${esc(st.reportEmail||"")}" placeholder="name@example.com" style="margin-top:4px"></label>
+    <label class="f">GitHub repository for issues (optional)<input class="t" data-bind="repRepo" value="${esc(st.reportRepo||"")}" placeholder="owner/repo" autocapitalize="off" style="margin-top:4px"></label>`;
+  if(reps.length){
+    h += `<div class="f">Saved reports (${reps.length}), newest first</div><div>${reps.slice(-10).reverse().map(r => `<div class="selrow"><button class="linkbtn" style="flex:1;text-align:left;min-width:0" data-act="repOpen" data-id="${r.id}">${esc(kindL[r.kind]||"Feedback")}: ${esc(((r.text||"").trim().split("\n")[0] || (r.el ? r.el.label : "no text")).slice(0,60))} <span class="sub">${esc(fmtShort(r.ts||Date.now()))}</span></button><button class="icon" aria-label="Delete report" data-act="repDel" data-id="${r.id}">${ico("x")}</button></div>`).join("")}</div>
+      <div class="row"><button class="btn ghost sm" style="flex:1" data-act="repExport">${ico("export")}Export all</button><button class="btn danger sm" style="flex:1" data-act="repWipe">Delete all</button></div>`;
+  }
+  return h + `</div>`;
+}
+
+/* ---------- running workout: mini controller (dropdown) ---------- */
+let miniOpen = false;
+function renderMini(){
+  const M = $("#mini"), A = S.active;
+  if(!A){ miniOpen = false; M.innerHTML = ""; return; }
+  const onW = view==="workout";
+  if(onW && !miniOpen){ M.innerHTML = ""; return; }
+  const paused = !!A.pausedAt, L = liveInfo(A), cur = L.cur && setPreview(A, L.cur), nxt = L.next && setPreview(A, L.next);
+  const clock = fmtTime(Math.max(0, elapsedMs(A)/1000));
+  // Dropdown opens under the timer bar on the Workout tab, under the slim bar everywhere else
+  document.documentElement.style.setProperty("--mini-top", onW ? "var(--wbar-b,90px)" : "calc(env(safe-area-inset-top,0px) + 48px)");
+  const bar = onW ? "" : `<button class="mini-bar" data-act="miniToggle" aria-expanded="${miniOpen}" aria-label="Workout controls"><span class="dot ${paused?"off":""}"></span><span class="mini-t" data-clock>${clock}</span><span class="mini-what">${cur ? `${esc(cur.name)}, set ${cur.setNo}/${cur.of}` : "All sets done"}</span>${ico(miniOpen?"chevup":"chev")}</button>`;
+  if(!miniOpen){ M.innerHTML = bar; return; }
+  const restLeft = A.restEnd ? Math.ceil((A.restEnd - Date.now())/1000) : 0;
+  const card = `<div class="mini-card" role="dialog" aria-label="Workout controls">
+    <div class="spread" style="align-items:flex-start"><div style="min-width:0"><div class="sub" style="overflow-wrap:anywhere">${esc(A.name||"Workout")}${A.waiting?", timer not started":paused?", paused":""}</div><div class="mini-clock ${paused?"paused":""}" data-clock>${clock}</div></div><button class="icon" data-act="miniClose" aria-label="Close controls">${ico("chevup")}</button></div>
+    ${restLeft>0 ? `<div class="mini-rest" id="miniRest">Rest ${fmtTime(restLeft)}</div>` : ""}
+    ${cur ? `<div class="mini-now"><div class="sub">Now</div><div class="exname">${esc(cur.name)}</div><div class="setline">Set ${cur.setNo} of ${cur.of}: ${esc(cur.v)}</div><button class="btn primary wide" data-act="miniDone">${ico("check")}Mark set ${cur.setNo} done</button></div>`
+          : `<div class="empty" style="margin-top:10px;padding:14px">All sets are done. Finish to save the workout.</div>`}
+    ${nxt ? `<div class="mini-next"><span class="sub">Next:</span> ${esc(nxt.name)}, set ${nxt.setNo} of ${nxt.of}: ${esc(nxt.v)}</div>` : ""}
+    <div class="mini-ctl">
+      ${paused ? `<button class="btn" data-act="miniResume">${ico("play")}Resume</button>` : `<button class="btn" data-act="miniPause">${ico("pause")}Pause</button>`}
+      <button class="btn" data-act="miniReset">${ico("reset")}Reset</button>
+      <button class="btn primary" data-act="miniFinish">${ico("check")}Finish</button>
+      ${onW ? "" : `<button class="btn ghost" data-act="miniOpenW">${ico("open")}Open</button>`}
+    </div></div>`;
+  M.innerHTML = bar + `<div class="mini-scrim" data-act="miniClose"></div>` + card;
+}
+
+/* ---------- running workout: phone notification (Android) ---------- */
+let notifSig = "";
+async function syncNotif(force){
+  if(!("serviceWorker" in navigator) || !("Notification" in window)) return;
+  const A = S.active, st = S.settings;
+  try{
+    const reg = await navigator.serviceWorker.getRegistration(); if(!reg) return;
+    if(!A || !st.notif || Notification.permission!=="granted"){
+      if(notifSig){ (await reg.getNotifications({tag:"lifts-live"})).forEach(n => n.close()); notifSig = ""; }
+      return;
+    }
+    const L = liveInfo(A), cur = L.cur && setPreview(A, L.cur), nxt = L.next && setPreview(A, L.next), paused = !!A.pausedAt;
+    const lines = [cur ? `Now: ${cur.name}, set ${cur.setNo}/${cur.of}, ${cur.v}` : "All sets done. Open the app to finish."];
+    if(nxt) lines.push(`Next: ${nxt.name}, set ${nxt.setNo}/${nxt.of}`);
+    if(A.restEnd) lines.push(`Rest until ${new Date(A.restEnd).toLocaleTimeString(locale(), {hour:"2-digit", minute:"2-digit", second:"2-digit"})}`);
+    const title = (A.name||"Workout") + (A.waiting ? " (timer not started)" : paused ? " (paused)" : "");
+    const body = lines.join("\n"), sig = title + "|" + body;
+    if(!force && sig===notifSig) return; // nothing changed, do not redraw the notification
+    notifSig = sig;
+    const actions = [];
+    if(cur) actions.push({action:"done", title:"Set done"});
+    actions.push(paused ? {action:"resume", title:"Resume"} : {action:"pause", title:"Pause"});
+    await reg.showNotification(title, {body, tag:"lifts-live", renotify:false, silent:true, requireInteraction:true, icon:"icon-192.png", badge:"icon-192.png", timestamp:Date.now() - elapsedMs(A), actions});
+  }catch(e){}
+}
+async function toggleNotif(el){
+  if(!el.checked){ S.settings.notif = false; save(); syncNotif(true); return; }
+  if(!("Notification" in window) || !("serviceWorker" in navigator)){ el.checked = false; toast("This browser cannot show notifications."); return; }
+  const perm = Notification.permission==="granted" ? "granted" : await Notification.requestPermission();
+  if(perm!=="granted"){ el.checked = false; S.settings.notif = false; save(); toast("Notifications are blocked. Allow them for this app in the phone's settings."); return; }
+  S.settings.notif = true; save(); notifSig = ""; syncNotif(true); toast(S.active ? "Workout shown in notifications" : "It will show when a workout runs");
+}
+// Buttons in the notification arrive here from sw.js
+function runNotifAct(act){
+  const A = S.active; if(!A) return;
+  if(act==="done"){ const L = liveInfo(A); if(L.cur) markSetDone(L.cur.xi, L.cur.si); }
+  else if(act==="pause") pauseTimer();
+  else if(act==="resume") resumeTimer();
+  else { view = "workout"; sub = null; render(); }
+  notifSig = ""; syncNotif(true);
+}
+if("serviceWorker" in navigator) navigator.serviceWorker.addEventListener("message", ev => {
+  const d = ev.data || {}; if(d.type!=="notif") return;
+  if(ev.ports && ev.ports[0]) ev.ports[0].postMessage("ok"); // tells sw.js the page is awake, so it does not force the app open
+  runNotifAct(d.act);
+});
+
+/* ---------- developer mode: pick any part of the screen ---------- */
+let devPick = null; // {mode:"pick"|"sel", el, stack:[], info}
+function cssPath(el){
+  const out = []; let n = el;
+  while(n && n.nodeType===1 && n!==document.body && out.length<6){
+    let t = n.tagName.toLowerCase();
+    if(n.id) t += "#" + n.id;
+    const cls = typeof n.className==="string" ? n.className.trim().split(/\s+/).filter(Boolean).slice(0,2) : [];
+    if(cls.length) t += "." + cls.join(".");
+    if(n.dataset && n.dataset.act) t += `[act=${n.dataset.act}]`;
+    out.unshift(t); n = n.parentElement;
+  }
+  return out.join(" > ");
+}
+function shortLabel(el){
+  const tag = el.tagName.toLowerCase();
+  const t = String(el.getAttribute("aria-label") || (el.value!=null && el.value!=="" ? el.value : "") || el.innerText || el.getAttribute("placeholder") || "").trim().replace(/\s+/g, " ");
+  const kind = {button:"Button", input:"Field", textarea:"Text box", select:"Dropdown", section:"Container", div:"Container", table:"Table", tr:"Table row", td:"Table cell", th:"Table header", h1:"Heading", h2:"Heading", h3:"Heading", label:"Label", span:"Text", nav:"Tab bar", main:"Page", p:"Text", svg:"Icon"}[tag] || tag;
+  return t ? `${kind}: "${t.slice(0,50)}${t.length>50?"…":""}"` : kind;
+}
+function screenName(){
+  const n = {plans:"Plans", workout:"Workout", progress:"Progress", history:"History", settings:"Settings"}[view];
+  const sb = sub ? ({plan:"plan editor", hist:"workout details", ex:"exercise details"}[sub.k] || sub.k) : "";
+  const ly = picker ? "exercise picker" : importer ? "import sheet" : reorderKind ? "reorder sheet" : (miniOpen ? "quick controls" : "");
+  return [n, sb, ly].filter(Boolean).join(" > ");
+}
+function describeEl(el){
+  const r = el.getBoundingClientRect(), cs = getComputedStyle(el);
+  return {label:shortLabel(el), path:cssPath(el), screen:screenName(),
+    size:`${Math.round(r.width)}×${Math.round(r.height)} px at x ${Math.round(r.left)}, y ${Math.round(r.top)}`,
+    font:`${cs.fontFamily.split(",")[0].replace(/["']/g,"")}, ${cs.fontSize}`};
+}
+function renderDev(){
+  const D = $("#devui");
+  if(!S.settings.ap.dev || report){ if(!S.settings.ap.dev) devPick = null; D.innerHTML = ""; return; }
+  let h = `<button class="dev-tab ${devPick?"on":""}" data-act="devTab" aria-label="Developer tools: select a part of the screen">${ico("bug")}<span>DEV</span></button>`;
+  if(devPick && devPick.mode==="pick"){
+    h += `<div class="dev-ov" id="devOv"></div><div class="dev-bar"><span>Tap any part of the screen to select it. You can still scroll.</span><div class="row" style="gap:6px;flex-wrap:wrap"><button class="btn sm" data-act="devGeneral">Report without selecting</button><button class="btn ghost sm" data-act="devCancel">Cancel</button></div></div>`;
+  } else if(devPick && devPick.el){
+    const p = devPick.el.parentElement, r = devPick.el.getBoundingClientRect();
+    // Bar jumps to the top when the selected part sits in the lower half, so it never hides it
+    const top = r.top + r.height/2 > innerHeight/2;
+    h += `<div class="dev-hl" id="devHl"></div><div class="dev-bar ${top?"top":""}"><div class="dev-what"><b>${esc(devPick.info.label)}</b><small>${esc(devPick.info.path)}</small></div>
+      <div class="row" style="gap:6px;flex-wrap:wrap"><button class="btn sm" data-act="devWider" ${p && p!==document.body?"":"disabled"}>Bigger area</button><button class="btn sm" data-act="devNarrower" ${devPick.stack.length?"":"disabled"}>Smaller area</button><button class="btn sm" data-act="devRepick">Pick again</button>
+      <button class="btn primary sm" data-act="devReport">${ico("bug")}Report bug</button><button class="btn ghost sm" data-act="devCancel">Close</button></div></div>`;
+  }
+  D.innerHTML = h;
+  const ov = $("#devOv"); if(ov) ov.addEventListener("click", devHit);
+  placeHl();
+}
+// The overlay swallows the tap so nothing in the app reacts; elementsFromPoint finds what is under it
+function devHit(e){
+  e.stopPropagation();
+  let el = document.elementsFromPoint(e.clientX, e.clientY).find(n => !n.closest("#devui") && n!==document.documentElement && n!==document.body);
+  if(!el) return;
+  if(el.closest("svg")) el = el.closest("svg").parentElement; // an icon means its button
+  devPick = {mode:"sel", el, stack:[], info:describeEl(el)};
+  renderDev();
+}
+let hlRaf = 0;
+function placeHl(){
+  cancelAnimationFrame(hlRaf);
+  hlRaf = requestAnimationFrame(() => {
+    const hl = $("#devHl"); if(!hl || !devPick || !devPick.el) return;
+    if(!devPick.el.isConnected){ hl.style.display = "none"; return; } // app re-drew the screen; details are already captured
+    const r = devPick.el.getBoundingClientRect();
+    Object.assign(hl.style, {display:"block", left:r.left+"px", top:r.top+"px", width:r.width+"px", height:r.height+"px"});
+  });
+}
+window.addEventListener("scroll", placeHl, {passive:true, capture:true});
+window.addEventListener("resize", () => { placeHl(); sizeWbar(); }, {passive:true});
+
+/* ---------- feedback / bug report sheet ---------- */
+let report = null; // {id, kind, text, el, diag, diagText, ts}
+function diagText(){
+  const ap = S.settings.ap;
+  return [`App version: ${APP_VERSION}`, `Screen: ${screenName()}`, `Viewport: ${innerWidth}×${innerHeight}, pixel ratio ${devicePixelRatio}`,
+    `Theme: ${THEMES[themeKey()].name}`, `Fonts: ${(FONTS[ap.font]||["?"])[0]}, headings ${(HFONTS[ap.head]||["?"])[0]}, text size ${ap.scale}%`,
+    `Workout running: ${S.active?"yes":"no"}`, `Installed app: ${window.matchMedia && matchMedia("(display-mode: standalone)").matches?"yes":"no"}`,
+    `Browser: ${navigator.userAgent}`].join("\n");
+}
+function openReport(info){
+  report = {id:uid(), kind:"bug", text:"", el:info||null, diag:true, diagText:diagText(), ts:null}; // details captured now, while the screen is as the user saw it
+  devPick = null; renderReport(); renderDev();
+}
+function reportText(r){
+  const kind = {bug:"Bug report", idea:"Idea", other:"Feedback"}[r.kind] || "Feedback";
+  const L = [`Lifts: ${kind} (${new Date(r.ts||Date.now()).toLocaleString(locale())})`, "", (r.text||"").trim() || "(no description)"];
+  if(r.el) L.push("", `Selected part: ${r.el.label}`, `Screen: ${r.el.screen}`, `Path: ${r.el.path}`, `Size: ${r.el.size}`, `Font: ${r.el.font}`);
+  if(r.diag && r.diagText) L.push("", r.diagText);
+  return L.join("\n");
+}
+function keepReport(){
+  report.ts = report.ts || Date.now();
+  S.reports = S.reports || [];
+  const i = S.reports.findIndex(x => x.id===report.id);
+  if(i<0) S.reports.push(clone(report)); else S.reports[i] = clone(report);
+  if(S.reports.length > 100) S.reports = S.reports.slice(-100); // keeps the saved data small
+  save();
+}
+async function sendReport(a){
+  keepReport();
+  const text = reportText(report), title = `Lifts: ${(report.text||"").trim().split("\n")[0].slice(0,70) || (report.el ? report.el.label : "feedback")}`;
+  if(a==="repShare" && navigator.share){
+    try{ await navigator.share({title, text}); }catch(e){ if(e && e.name==="AbortError") return; toast("Could not open sharing. Try Copy text."); return; }
+  } else if(a==="repShare" || a==="repCopy"){
+    try{ await navigator.clipboard.writeText(text); toast("Copied"); }catch(e){ toast("Could not copy on this device"); return; }
+  } else if(a==="repMail"){
+    location.href = `mailto:${S.settings.reportEmail||""}?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(text)}`;
+  } else if(a==="repGit"){
+    window.open(`https://github.com/${S.settings.reportRepo}/issues/new?title=${encodeURIComponent(title)}&body=${encodeURIComponent(text)}`, "_blank");
+  }
+  report = null; renderReport(); renderDev(); if(view==="settings") render();
+}
+function renderReport(){
+  const R = $("#report");
+  if(!report){ R.innerHTML = ""; return; }
+  R.innerHTML = `<div class="sheet" style="z-index:80" role="dialog" aria-modal="true" aria-label="Feedback"><div class="sheet-h"><div class="spread"><h2>${report.el ? "Report a bug" : "Send feedback"}</h2><button class="btn ghost sm" data-act="repClose">Close</button></div></div>
+    <div class="sheet-b stack">
+      <div class="seg">${[["bug","Bug"],["idea","Idea"],["other","Other"]].map(([k,l]) => `<button data-act="repKind" data-v="${k}" aria-pressed="${report.kind===k}">${l}</button>`).join("")}</div>
+      ${report.el ? `<div class="item"><div class="f">Selected part, on ${esc(report.el.screen)}</div><div class="exname" style="overflow-wrap:anywhere">${esc(report.el.label)}</div><div class="sub" style="font-size:.78rem;overflow-wrap:anywhere">${esc(report.el.path)}</div><button class="linkbtn" data-act="repNoEl">Remove</button></div>` : ""}
+      <label class="f">${report.kind==="idea" ? "Your idea" : "What happened, and what did you expect?"}<textarea class="t" id="repText" style="min-height:140px;margin-top:4px">${esc(report.text)}</textarea></label>
+      <label class="spread"><span>Add app details (version, screen size, theme, font)</span><input type="checkbox" id="repDiag" ${report.diag?"checked":""} style="width:22px;height:22px"></label>
+      <p class="sub" style="margin:0">Every option below also keeps a copy in Settings, under Feedback.</p></div>
+    <div class="sheet-f"><div class="row"><button class="btn primary" style="flex:1" data-act="repShare">${ico("export")}Share</button><button class="btn" style="flex:1" data-act="repSave">Save only</button></div>
+      <div class="row" style="margin-top:8px;flex-wrap:wrap"><button class="btn ghost sm" style="flex:1" data-act="repCopy">Copy text</button><button class="btn ghost sm" style="flex:1" data-act="repMail">Email</button>${S.settings.reportRepo ? `<button class="btn ghost sm" style="flex:1" data-act="repGit">GitHub issue</button>` : ""}</div></div></div>`;
+  $("#repText").addEventListener("input", e => { report.text = e.target.value; });
+  $("#repDiag").addEventListener("change", e => { report.diag = e.target.checked; });
+  if(!report.text) setTimeout(() => { const t = $("#repText"); t && t.focus(); }, 50);
 }
 
 /* ---------- reorder sheet: exercises, my plans, templates ---------- */
@@ -1120,7 +1410,7 @@ function renderReorder(){
   if(!reorderKind || (reorderKind==="ex" && !S.active)){ Lr.innerHTML = ""; return; }
   const items = reorderLabels(), title = {ex:"Exercise order", plans:"Order of my plans", tpl:"Order of templates"}[reorderKind];
   Lr.innerHTML = `<div class="sheet" role="dialog" aria-modal="true" aria-label="${title}"><div class="sheet-h"><div class="spread"><h2>${title}</h2><button class="btn primary sm" data-act="reorderClose">Done</button></div></div>
-    <div class="sheet-b">${items.map((lab,i) => `<div class="selrow"><span class="mark on">${i+1}</span>${lab}<div class="row" style="gap:0"><button class="icon" aria-label="Move up" data-act="roUp" data-i="${i}" ${i?"":"disabled"}>↑</button><button class="icon" aria-label="Move down" data-act="roDown" data-i="${i}" ${i<items.length-1?"":"disabled"}>↓</button></div></div>`).join("")}
+    <div class="sheet-b">${items.map((lab,i) => `<div class="selrow"><span class="mark on">${i+1}</span>${lab}<div class="row" style="gap:0"><button class="icon" aria-label="Move up" data-act="roUp" data-i="${i}" ${i?"":"disabled"}>${arr("up")}</button><button class="icon" aria-label="Move down" data-act="roDown" data-i="${i}" ${i<items.length-1?"":"disabled"}>${arr("down")}</button></div></div>`).join("")}
     ${reorderKind==="ex" ? `<button class="btn ghost wide" data-act="roShuffle" style="margin-top:14px">${ico("shuffle")}Random order</button>` : ""}</div></div>`;
 }
 
@@ -1131,6 +1421,15 @@ const COL_ALIASES = {
   exercise:["exercise","cwiczenie","ćwiczenie","cvik"], sets:["sets","serie","série"], reps:["reps","powtórzenia","powtorzenia","opakování","opakovania","time","czas"],
   kg:["kg","weight","ciężar","ciezar","váha"], rest:["rest","przerwa","odpočinek","odpočinok"], note:["note","notatka","uwagi","poznámka"], type:["type","typ"]
 };
+// Smallest file that shows every column and all three exercise types; ranges use an en dash because Excel turns 8-12 into a date
+function csvTemplate(){
+  const rows = [CSV_HEAD,
+    ["Day A","Optional note for the whole plan","Bench Press (Barbell)","3","8–12","60","90","Optional note for this exercise","w"],
+    ["Day A","","Pull-up","3","8","","120","Bodyweight: kg means extra weight","bw"],
+    ["Day A","","Plank","3","1:00","","60","Time as minutes:seconds","t"],
+    ["Day B","","Squat (Barbell)","5","5","80","180","","w"]];
+  return "\ufeff" + rows.map(r => r.map(csvCell).join(",")).join("\r\n") + "\r\n";
+}
 const csvCell = v => { v = v==null ? "" : String(v); return /[",;\n\r\t]/.test(v) ? '"' + v.replace(/"/g,'""') + '"' : v; };
 function plansToCSV(plans){
   const rows = [CSV_HEAD];
@@ -1213,7 +1512,9 @@ function renderImport(){
   Lr.innerHTML = `<div class="sheet" role="dialog" aria-modal="true" aria-label="Import plans"><div class="sheet-h"><div class="spread"><h2>Import plans</h2><button class="btn ghost sm" data-act="impClose">Close</button></div></div>
     <div class="sheet-b stack">
       <p class="sub" style="margin:0">Use a CSV file, separated by commas or semicolons. Columns: plan, plan_note, exercise, sets, reps, kg, rest, note, type. Only <strong>plan</strong> and <strong>exercise</strong> are required. Exercise names work in any of the four languages. Imported plans are added next to your plans; nothing gets replaced.</p>
-      <div class="row"><button class="btn" style="flex:1" data-act="impFile">${ico("import")}Choose file</button><button class="btn ghost" style="flex:1" data-act="impExample">${ico("export")}Example file</button></div>
+      <p class="sub" style="margin:0">type: w = weight and reps, bw = bodyweight reps, t = time. If Excel turns 8-12 into a date, type 8–12 or keep the cell as text.</p>
+      <button class="btn wide" data-act="impFile">${ico("import")}Choose file</button>
+      <div class="row"><button class="btn ghost" style="flex:1" data-act="csvTemplate">${ico("export")}Blank template</button><button class="btn ghost" style="flex:1" data-act="impExample">${ico("export")}Example plans</button></div>
       <input type="file" id="csvFile" accept=".csv,text/csv,text/plain" hidden>
       <label class="f">Or paste the text here<textarea class="t" id="csvText" style="min-height:130px;font-size:.85rem;margin-top:4px">${esc(importer.text)}</textarea></label>
       <button class="btn wide" data-act="impCheck">Check</button>
@@ -1248,6 +1549,42 @@ async function finishWorkout(){
   view="history"; sub={k:"hist", id:w.id}; render(); window.scrollTo(0,0);
   toast(pr.list.length ? `Workout saved. New record${pr.list.length>1?"s":""}: ` + pr.list.map(p=>`${exMain(getEx(p.exId))} ${setText(p.s,p.type)}`).join("; ") : "Workout saved");
 }
+/* Pending set = first set not ticked, in exercise order. Drives the mini controller and the phone notification. */
+function liveInfo(A){
+  const P = []; A.exercises.forEach((x, xi) => x.sets.forEach((z, si) => { if(!z.done) P.push({xi, si}); }));
+  return {cur:P[0]||null, next:P[1]||null};
+}
+function setPreview(A, p){
+  const x = A.exercises[p.xi], e = getEx(x.exId), z = x.sets[p.si], ph = placeholders(x, p.si);
+  const val = f => (z[f]!=="" && z[f]!=null) ? z[f] : ph[f];
+  let v;
+  if(e.type==="t") v = val("t") || "time not set";
+  else { const kg = val("kg"), r = val("reps"), showKg = kg!=="" && kg!=null && !(e.type==="bw" && num(kg)===0); v = (showKg ? `${kg} kg × ` : "") + (r ? `${r} reps` : "reps not set"); }
+  return {name:exMain(e), setNo:p.si+1, of:x.sets.length, v};
+}
+// One code path for ticking a set, shared by the table, the mini controller and the notification
+function markSetDone(xi, si){
+  const A = S.active, x = A.exercises[xi];
+  if(!fillSet(x, si)){ toast(getEx(x.exId).type==="t" ? `Enter a time for ${exMain(getEx(x.exId))} first` : `Enter reps for ${exMain(getEx(x.exId))} first`); render(); return false; }
+  startTimerNow(A); x.sets[si].done = true; save(); render();
+  if(!A.exercises.every(e=>e.sets.every(z=>z.done))) startRest(x.rest || S.settings.rest);
+  return true;
+}
+function pauseTimer(){ const A = S.active; if(A && !A.pausedAt){ A.pausedAt = Date.now(); save(); render(); } }
+function resumeTimer(){
+  const A = S.active; if(!A) return;
+  if(A.waiting){ startTimerNow(A); save(); render(); return; }
+  if(A.pausedAt){ A.pausedMs = (A.pausedMs||0) + (Date.now()-A.pausedAt); A.pausedAt = null; save(); render(); }
+}
+async function resetWorkout(){
+  const r = await askChoice("Reset this workout?", [{v:"timer",label:"Reset the timer",kind:"primary"},{v:"all",label:"Reset the timer and untick all sets",kind:"danger"},{v:"",label:"Cancel",kind:"ghost"}]);
+  if(!r) return;
+  const A = S.active; if(!A) return;
+  // Back to "waiting": the timer restarts on play or on the first ticked set, same as an empty workout
+  A.start = Date.now(); A.pausedMs = 0; A.pausedAt = Date.now(); A.waiting = true; A.restEnd = null;
+  if(r==="all") A.exercises.forEach(x => x.sets.forEach(z => z.done = false));
+  save(); render(); toast(r==="all" ? "Timer reset and sets unticked" : "Timer reset");
+}
 function startTimerNow(A){ if(A && A.waiting){ A.start = Date.now(); A.pausedMs = 0; A.pausedAt = null; A.waiting = false; } }
 function promptText(msg, value, hint){
   return new Promise(res => {
@@ -1263,7 +1600,7 @@ function parseClock(v){
   const [h,m,sec] = parts.length>=3 ? parts.slice(-3) : parts.length===2 ? [0,parts[0],parts[1]] : [0,parts[0],0];
   return (h*3600 + m*60 + sec) * 1000;
 }
-function startRest(sec){ const A = S.active; A.restTotal = sec; A.restEnd = Date.now() + sec*1000; save(); tick(); }
+function startRest(sec){ const A = S.active; A.restTotal = sec; A.restEnd = Date.now() + sec*1000; save(); renderMini(); tick(); }
 
 /* ---------- render ---------- */
 let navLock = false, lastNavKey = "";
@@ -1278,22 +1615,64 @@ function render(){
     if(b.dataset.tab===view) b.setAttribute("aria-current","page");
     b.classList.toggle("live", b.dataset.tab==="workout" && !!S.active);
   });
+  document.body.classList.toggle("has-mini", !!S.active && view!=="workout");
+  hookWbar(); renderMini(); renderDev();
   tick();
 }
+
+/* ---------- timer bar sizing ---------- */
+let wbarRO = null, clockLen = 0;
+function hookWbar(){
+  const b = $("#wbar"); if(!b) return;
+  if(!wbarRO && window.ResizeObserver) wbarRO = new ResizeObserver(() => sizeWbar());
+  if(wbarRO){ wbarRO.disconnect(); wbarRO.observe(b); }
+  sizeWbar();
+}
+// Spacer under the fixed bar = bar height minus what :root and .wrap already pad, plus a small gap
+function sizeWbar(){
+  const b = $("#wbar"); if(!b) return;
+  const h = b.getBoundingClientRect().height, safe = parseFloat(getComputedStyle(document.documentElement).paddingTop) || 0;
+  document.documentElement.style.setProperty("--wspace", Math.max(0, h - safe - 16 + 12) + "px");
+  document.documentElement.style.setProperty("--wbar-b", h + "px");
+  fitClock();
+}
+// Shrinks the clock only when it would not fit its slot, so the buttons never move or wrap
+function fitClock(){
+  const c = $("#elapsed"); if(!c) return;
+  c.style.fontSize = "";
+  const max = parseFloat(getComputedStyle(c).fontSize), avail = c.clientWidth;
+  if(avail && c.scrollWidth > avail) c.style.fontSize = Math.max(16, Math.floor(max * avail / c.scrollWidth) - 1) + "px";
+  clockLen = c.textContent.length;
+}
+if(document.fonts && document.fonts.ready) document.fonts.ready.then(fitClock);
 function tick(){
-  const A = S.active, el = $("#elapsed");
-  if(A && el) el.textContent = fmtTime(Math.max(0, elapsedMs(A)/1000));
+  const A = S.active;
+  if(A){
+    const txt = fmtTime(Math.max(0, elapsedMs(A)/1000));
+    document.querySelectorAll("[data-clock]").forEach(c => { if(c.textContent!==txt) c.textContent = txt; });
+    if(txt.length!==clockLen) fitClock();
+  }
   const R = $("#rest");
   if(A && A.restEnd){
     const left = (A.restEnd - Date.now())/1000;
-    if(left <= 0){ A.restEnd = null; save(); R.innerHTML = ""; alertDone(); toast("Rest is over"); return; }
+    if(left <= 0){ A.restEnd = null; save(); R.innerHTML = ""; renderMini(); alertDone(); toast("Rest is over"); return; }
+    const mr = $("#miniRest"); if(mr) mr.textContent = "Rest " + fmtTime(Math.ceil(left));
     const pct = 100 - Math.min(100, left / (A.restTotal||1) * 100);
     if(!R.firstChild) R.innerHTML = `<div class="rest" role="timer" aria-label="Rest timer"><div class="bar"></div><div class="time"></div><button data-act="restAdj" data-v="-15">−15</button><button data-act="restAdj" data-v="15">+15</button><button data-act="restSkip">Skip</button></div>`;
     R.querySelector(".time").textContent = "Rest " + fmtTime(Math.ceil(left));
     R.querySelector(".bar").style.width = pct + "%";
   } else R.innerHTML = "";
 }
-setInterval(tick, 500);
+// Wake up right after each whole second of the clock (or rest timer) instead of every 500 ms,
+// so the display flips evenly and never looks like it lags
+function loop(){
+  tick();
+  const A = S.active; let d = 1000;
+  if(A && !A.pausedAt && !A.waiting) d = 1000 - (elapsedMs(A) % 1000);
+  if(A && A.restEnd){ const r = (A.restEnd - Date.now()) % 1000; d = Math.min(d, r > 0 ? r : 1000 + r); }
+  setTimeout(loop, Math.max(25, Math.min(1000, d + 15)));
+}
+loop();
 
 /* ---------- events ---------- */
 document.addEventListener("focusin", ev => {
@@ -1368,14 +1747,35 @@ document.addEventListener("click", async ev => {
       picker=null; renderPicker(); save(); render(); break;
     }
     case "toggleSet": {
-      const x=A.exercises[+b.dataset.x], si=+b.dataset.s, s=x.sets[si];
-      if(!s.done){
-        if(!fillSet(x, si)){ toast(getEx(x.exId).type==="t" ? "Enter a time first" : "Enter reps first"); render(); break; }
-        startTimerNow(A); s.done=true; save(); render();
-        if(!A.exercises.every(e=>e.sets.every(z=>z.done))) startRest(x.rest || S.settings.rest);
-      } else { s.done=false; save(); render(); }
+      const xi=+b.dataset.x, si=+b.dataset.s, s=A.exercises[xi].sets[si];
+      if(!s.done) markSetDone(xi, si); else { s.done=false; save(); render(); }
       break;
     }
+    case "miniToggle": miniOpen=!miniOpen; renderMini(); break;
+    case "miniClose": miniOpen=false; renderMini(); break;
+    case "miniDone": { if(!A) break; const L=liveInfo(A); if(L.cur) markSetDone(L.cur.xi, L.cur.si); break; }
+    case "miniPause": pauseTimer(); break;
+    case "miniResume": resumeTimer(); break;
+    case "miniReset": await resetWorkout(); break;
+    case "miniOpenW": miniOpen=false; view="workout"; sub=null; render(); window.scrollTo(0,0); break;
+    case "devTab": devPick = devPick ? null : {mode:"pick", el:null, stack:[]}; renderDev(); break;
+    case "devCancel": devPick=null; renderDev(); break;
+    case "devRepick": devPick={mode:"pick", el:null, stack:[]}; renderDev(); break;
+    case "devWider": { const p=devPick.el.parentElement; if(p && p!==document.body){ devPick.stack.push(devPick.el); devPick.el=p; devPick.info=describeEl(p); renderDev(); } break; }
+    case "devNarrower": if(devPick.stack.length){ devPick.el=devPick.stack.pop(); devPick.info=describeEl(devPick.el); renderDev(); } break;
+    case "devReport": openReport(devPick.info); break;
+    case "devGeneral": openReport(null); break;
+    case "feedback": openReport(null); break;
+    case "repClose": report=null; renderReport(); renderDev(); break;
+    case "repKind": report.kind=b.dataset.v; renderReport(); break;
+    case "repNoEl": report.el=null; renderReport(); break;
+    case "repSave": keepReport(); report=null; renderReport(); renderDev(); toast("Saved in Settings, under Feedback"); if(view==="settings") render(); break;
+    case "repShare": case "repCopy": case "repMail": case "repGit": await sendReport(a); break;
+    case "repOpen": { const r=(S.reports||[]).find(x=>x.id===b.dataset.id); if(r){ report=clone(r); renderReport(); } break; }
+    case "repDel": S.reports=(S.reports||[]).filter(x=>x.id!==b.dataset.id); save(); render(); break;
+    case "repExport": saveTextFile(`lifts-reports-${new Date().toISOString().slice(0,10)}.txt`, (S.reports||[]).map(reportText).join("\n\n----------\n\n"), "text/plain"); break;
+    case "repWipe": if(await ask("Delete all saved reports?", "Delete", true)){ S.reports=[]; save(); render(); } break;
+    case "csvTemplate": saveTextFile("lifts-plan-template.csv", csvTemplate(), "text/csv"); break;
     case "doneAll": {
       const x=A.exercises[+b.dataset.x];
       if(x.sets.every(z=>z.done)){ x.sets.forEach(z=>z.done=false); save(); render(); break; }
@@ -1424,10 +1824,10 @@ document.addEventListener("click", async ev => {
     case "reorderClose": reorderKind=null; renderReorder(); render(); break;
     case "roUp": case "roDown": { const i=+b.dataset.i, j=a==="roUp"?i-1:i+1; moveItem(i,j); renderReorder(); break; }
     case "roShuffle": { const E=A.exercises; for(let i=E.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [E[i],E[j]]=[E[j],E[i]]; } save(); renderReorder(); break; }
-    case "timerPause": if(A && !A.pausedAt){ A.pausedAt=Date.now(); save(); render(); } break;
-    case "timerResume": if(A && A.waiting){ startTimerNow(A); save(); render(); break; } if(A && A.pausedAt){ A.pausedMs=(A.pausedMs||0)+(Date.now()-A.pausedAt); A.pausedAt=null; save(); render(); } break;
+    case "timerPause": pauseTimer(); break;
+    case "timerResume": resumeTimer(); break;
     case "wxDel": if(await ask(`Remove ${exMain(getEx(A.exercises[+b.dataset.x].exId))} from this workout?`, "Remove", true)){ A.exercises.splice(+b.dataset.x,1); save(); render(); } break;
-    case "finish": finishWorkout(); break;
+    case "finish": case "miniFinish": miniOpen=false; finishWorkout(); break;
     case "discard": if(await ask("Discard this workout? Nothing from it will be saved.", "Discard", true)){ S.active=null; save(); syncWake(); render(); } break;
     case "restAdj": if(A && A.restEnd){ A.restEnd += (+b.dataset.v)*1000; A.restTotal = Math.max(1, A.restTotal + (+b.dataset.v)); save(); tick(); } break;
     case "restSkip": if(A){ A.restEnd=null; save(); tick(); } break;
@@ -1494,6 +1894,9 @@ document.addEventListener("input", ev => {
   else if(k==="sound") S.settings.sound = el.checked;
   else if(k==="wake"){ S.settings.wake = el.checked; syncWake(); }
   else if(k==="templates") S.settings.templates = el.checked;
+  else if(k==="notif"){ toggleNotif(el); return; }
+  else if(k==="repEmail") S.settings.reportEmail = el.value.trim();
+  else if(k==="repRepo") S.settings.reportRepo = el.value.trim().replace(/^https?:\/\/github\.com\//i, "").replace(/\/+$/, "");
   else if(k==="apFont"){ S.settings.ap.font = el.value; applyAppearance(); }
   else if(k==="apHead"){ S.settings.ap.head = el.value; applyAppearance(); }
   else if(k==="apScale"){ S.settings.ap.scale = +el.value; $("#scaleVal").textContent = el.value+"%"; applyAppearance(); }
@@ -1566,6 +1969,7 @@ window.addEventListener("popstate", async ev => {
   const here = navState();
   const m = document.querySelector("#layer .modal");
   if(m){ m.dispatchEvent(new MouseEvent("click", {bubbles:true})); try{ history.pushState(here, ""); }catch(e){} return; }
+  if(report || devPick || miniOpen){ report = null; devPick = null; miniOpen = false; renderReport(); renderMini(); renderDev(); try{ history.pushState(here, ""); }catch(e){} return; }
   if(picker || reorderKind || importer){ picker = null; reorderKind = null; importer = null; $("#layer").innerHTML = ""; render(); try{ history.pushState(here, ""); }catch(e){} return; }
   const st = ev.state; if(!st || !st.view) return;
   const toSub = st.sub;
@@ -1578,6 +1982,9 @@ window.addEventListener("popstate", async ev => {
   navLock = true; render(); navLock = false; lastNavKey = navKey(); window.scrollTo(0,0);
 });
 syncWake();
+// sw.js opens ./?na=<action> when a notification button is used while the app was fully closed
+{ const na = new URLSearchParams(location.search).get("na"); if(na){ try{ history.replaceState(navState(), "", location.pathname); }catch(e){} setTimeout(() => runNotifAct(na), 60); } }
+syncNotif(true);
 if("serviceWorker" in navigator && window.isSecureContext){ navigator.serviceWorker.register("sw.js").catch(()=>{}); }
 </script>
 </body>
